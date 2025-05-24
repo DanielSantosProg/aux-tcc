@@ -8,9 +8,9 @@ import Sidebar from './components/Sidebar';
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen flex-row">
       <BrowserRouter>        
-        <div className="container">
+        <div className="flex">
           <Sidebar />
           <Routes>
             <Route path="/" element={<Home />} />
