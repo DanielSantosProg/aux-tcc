@@ -58,10 +58,10 @@ const Sidebar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-gray-100 transition-colors group"
+                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <Gauge className="text-gray-400" size={22} />
-                  <span className="flex-1 ms-3 whitespace-nowrap">Progresso</span>
+                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Progresso</span>
                   <Lock className="text-gray-400" size={16} />
                 </a>
               </li>
@@ -69,10 +69,10 @@ const Sidebar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-gray-100 transition-colors group"
+                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <FileText className="text-gray-400" size={22} />
-                  <span className="flex-1 ms-3 whitespace-nowrap">Documentos</span>
+                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Documentos</span>
                   <span className="inline-flex items-center justify-center w-5 h-5 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
                     3
                   </span>
@@ -82,20 +82,20 @@ const Sidebar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-gray-100 transition-colors group"
+                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <Speech className="text-gray-400" size={22} />
-                  <span className="flex-1 ms-3 whitespace-nowrap">Orientadores</span>
+                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Orientadores</span>
                 </a>
               </li>
               
               <li className="pt-4 mt-4 border-t border-gray-200">
                 <a 
                   href="#" 
-                  className="flex items-center p-3 text-red-500 rounded-lg hover:bg-red-50 hover:text-red-700 transition-colors group"
+                  className="flex items-center p-3 text-red-500 rounded-lg hover:bg-red-200 hover:text-red-700 transition-colors group"
                 >
                   <LogOutIcon className="text-red-500" size={22} />
-                  <span className="flex-1 ms-3 whitespace-nowrap font-medium">Sair</span>
+                  <span className="flex-1 text-red-500 ms-3 whitespace-nowrap font-medium">Sair</span>
                 </a>
               </li>
             </ul>
