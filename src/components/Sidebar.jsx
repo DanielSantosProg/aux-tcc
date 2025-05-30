@@ -89,15 +89,16 @@ const Sidebar = () => {
                 </a>
               </li>
               
-              <li className="pt-4 mt-4 border-t border-gray-200">
-                <a 
-                  href="#" 
-                  className="flex items-center p-3 text-red-500 rounded-lg hover:bg-red-200 hover:text-red-700 transition-colors group"
-                >
-                  <LogOutIcon className="text-red-500" size={22} />
-                  <span className="flex-1 text-red-500 ms-3 whitespace-nowrap font-medium">Sair</span>
-                </a>
-              </li>
+              <a 
+                href="#"
+                data-modal-target="authentication-modal"
+                data-modal-toggle="authentication-modal"
+                className="flex items-center p-3 text-red-500 rounded-lg hover:bg-red-200 hover:text-red-700 transition-colors group"
+              >
+                <LogOutIcon className="text-red-500" size={22} />
+                <span className="flex-1 text-red-500 ms-3 whitespace-nowrap font-medium">Sair</span>
+              </a>
+
             </ul>
           </nav>
         </div>

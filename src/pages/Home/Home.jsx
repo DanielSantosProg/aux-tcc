@@ -32,7 +32,8 @@ const Home = () => {
         <Card title="Orientadores" text="Conheça os orientadores do curso e inicie sua proposta de projeto." />
         <Card title="Progresso" text="Acesse a sua Timeline e dê continuidade no seu TCC." />
       </div>
-      <div className="w-2/3 my-16">
+      <div className="w-2/3 my-16 mx-16 self-start">
+        <h2 className="text-2xl my-2 font-bold text-black">Perguntas Frequentes:</h2>
         <Accordion items={accordionData} />
       </div>
     </div>
