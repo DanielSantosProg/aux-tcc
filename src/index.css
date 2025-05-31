@@ -20,6 +20,7 @@
   /* Bordas e sombras */
   --border-radius: 4px;
   --box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  height: 100%;
 }
 
 html {
@@ -35,10 +36,10 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   color: var(--text-color);
-  background-color: red;
+  background-color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  height: 100%;
 }
 
 /* Outros estilos globais, como para <a>, <button>, etc. */

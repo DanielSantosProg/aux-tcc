@@ -6,7 +6,7 @@ const Home = () => {
   const [accordionData] = useState([
     {
       title: "Como iniciar o TCC?",
-      text: "Para iniciar seu TCC, você deve escolher um orientador, definir um tema e preencher a proposta inicial disponível na aba de Documentos.",
+      text: "Para iniciar seu TCC, você deve escolher um orientador, definir um tema, entrar em contato com um orientador, preencher e enviar a Carta de Aceite (disponível na aba de Documentos) para o orientador escolhido.",
     },
     {
       title: "Quais os prazos importantes?",
@@ -19,8 +19,8 @@ const Home = () => {
   ]);
 
   return (
-    <div className="flex flex-col items-center w-full bg-white">
-      <h1 className="text-5xl m-0 w-2/4 self-start text-start font-extrabold text-emerald-500 py-8 px-16">
+    <div className="flex overflow-y-auto flex-col items-center w-full bg-white">
+      <h1 className="text-5xl m-0 self-start text-start font-extrabold text-emerald-500 py-8 px-16">
         Bem Vindo ao portal de auxílio ao TCC.
       </h1>
       <p className="px-16 pb-16 text-2xl text-black self-start">

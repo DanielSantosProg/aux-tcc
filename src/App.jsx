@@ -13,13 +13,15 @@ function App() {
   return (
     <div className="min-h-screen flex-row">
       <BrowserRouter>        
-        <div className="flex">
+        <div className="flex min-h-screen">
           <Sidebar />
-          <LoginModal />
-          <RegisterModal />
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
+          <div className='ml-2 sm:ml-64'>
+            <LoginModal />
+            <RegisterModal />
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </div>          
         </div>
       </BrowserRouter>
     </div>
