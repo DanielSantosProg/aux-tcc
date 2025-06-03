@@ -63,7 +63,7 @@ const Sidebar = () => {
               
               <li>
                 <a 
-                  href="#" 
+                  href="/progresso" 
                   className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <Gauge className="text-gray-400" size={22} />
@@ -74,7 +74,7 @@ const Sidebar = () => {
               
               <li>
                 <a 
-                  href="#" 
+                  href="/documentos" 
                   className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <FileText className="text-gray-400" size={22} />
@@ -87,7 +87,7 @@ const Sidebar = () => {
               
               <li>
                 <a 
-                  href="#" 
+                  href="/orientadores" 
                   className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
                 >
                   <Speech className="text-gray-400" size={22} />
