@@ -11,6 +11,7 @@ import RegisterModal from './components/RegisterModal';
 import Progress from './pages/Progress/Progress';
 import Documents from './pages/Documents/Documents';
 import Orientadores from './pages/Orientadores/Orientadores';
+import Orientador from './pages/Orientador/Orientador';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route path="/progresso" element={<Progress />} />
               <Route path="/documentos" element={<Documents />} />
               <Route path="/orientadores" element={<Orientadores />} />
+              <Route path="/orientador/:nome" element={<Orientador />} />              
             </Routes>
           </div>          
         </div>
