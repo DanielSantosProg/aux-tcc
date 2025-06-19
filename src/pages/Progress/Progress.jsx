@@ -2,34 +2,86 @@ import ProgressStepper from '../../components/ProgressStepper'
 import Timeline from '../../components/Timeline'
 import React, {useState} from 'react'
 import { Tabs, TabItem } from 'flowbite-react'
+import Comments from '../../components/Comments'
 
 const Progress = () => {
   const [tasks, setTasks] = useState([{
+      day: '1',
       date: 'Janeiro 2025',
       title: 'Enviar a Carta de Aceite',
       description: 'Faça o download do documento da carta de aceite no site e me envie com sua assinatura, para que eu assine.'      
     },
     {
+      day: '15',
       date: 'Fevereiro 2025',
       title: 'Anexar a Carta de Aceite',
       description: 'Insira a carta de aceite já na área de documentos, seção de entrega.'      
     },
     {
+      day: '8',
       date: 'Março 2025',
       title: 'Buscar Referências Bibliográficas',
       description: 'Vá atrás de referências bibliográficas que lidem com o assunto do seu tcc, coloque em um documento e entregue aqui.'      
     },    
     {
+      day: '3',
       date: 'Abril 2025',
       title: 'Iniciar o Projeto de Pesquisa',
       description: 'Comece a digitar o seu Projeto de Pesquisa, tomando como base as referências bibliográficas encontradas.'      
     },    
     {
+      day: '16',
       date: 'Maio 2025',
       title: 'Fazer alterações na Introdução do Projeto',
       description: 'A introdução que foi feita está caminhando, mas ainda falta adicionar mais citações para enriquecer a sua argumentação.'      
     },    
   ]);
+  const [comments, setComments] = useState([{
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Enviar a carta de aceite'
+  },
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Buscar Referências Bibliográficas'
+  },,
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Buscar Referências Bibliográficas'
+  },,
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Buscar Referências Bibliográficas'
+  },
+  ,
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Buscar Referências Bibliográficas'
+  },
+  ,
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Buscar Referências Bibliográficas'
+  },
+]);
+
   return (
     <div className='flex overflow-y-auto flex-col items-center w-full bg-white'>
         <h1 className='text-5xl m-0 self-start text-start font-extrabold text-emerald-500 py-8 px-16'>Progresso</h1>        
@@ -40,7 +92,7 @@ const Progress = () => {
                     <Timeline tasks={tasks}/>
                   </TabItem>
                   <TabItem title="Comentarios">
-                    <Timeline tasks={tasks}/>
+                    <Comments comments={comments}/>
                   </TabItem>
           </Tabs>
         </div>        

@@ -8,7 +8,7 @@ export const Timeline = ({tasks}) => {
             {tasks.map((task, index) => (
             <div key={index} className='w-full'>
                 <li class="mb-10 ms-4">
-                    <div class="absolute w-6 h-10 bg-white text-2xl text-gray-600 -start-3.5 border border-white">12</div>
+                    <div class="absolute w-6 h-10 bg-white text-2xl text-gray-600 -start-3.5 border border-white">{task.day}</div>
                     <time class="mb-1 ml-2 text-sm text-emerald-500 font-normal leading-none">{task.date}</time>
                     <h3 class="text-lg font-semibold text-gray-900">{task.title}</h3>
                     <p class="mb-4 text-base font-normal text-gray-500">{task.description}</p>
