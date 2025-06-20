@@ -3,8 +3,17 @@ import Timeline from '../../components/Timeline'
 import React, {useState} from 'react'
 import { Tabs, TabItem } from 'flowbite-react'
 import Comments from '../../components/Comments'
+import CommentsModal from '../../components/CommentsModal'
 
 const Progress = () => {
+  const [showModal, setShowModal] = useState(true)
+  const [selectedSubject, setSelectedSubject] = useState('')
+
+  const handleOpenComments = (subject) => {
+    setSelectedSubject(subject)
+    setShowModal(true)
+  }
+
   const [tasks, setTasks] = useState([{
       day: '1',
       date: 'Janeiro 2025',
@@ -41,7 +50,7 @@ const Progress = () => {
     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     timeSent: '08:48',
     date: '18/06/2025',
-    subject: 'Enviar a carta de aceite'
+    subject: 'Enviar a Carta de Aceite',
   },
   {
     userName: 'Ana Carolina',
@@ -49,14 +58,7 @@ const Progress = () => {
     timeSent: '08:48',
     date: '18/06/2025',
     subject: 'Buscar Referências Bibliográficas'
-  },,
-  {
-    userName: 'Ana Carolina',
-    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    timeSent: '08:48',
-    date: '18/06/2025',
-    subject: 'Buscar Referências Bibliográficas'
-  },,
+  },
   {
     userName: 'Ana Carolina',
     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -64,15 +66,20 @@ const Progress = () => {
     date: '18/06/2025',
     subject: 'Buscar Referências Bibliográficas'
   },
-  ,
   {
     userName: 'Ana Carolina',
     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     timeSent: '08:48',
     date: '18/06/2025',
-    subject: 'Buscar Referências Bibliográficas'
+    subject: 'Iniciar o Projeto de Pesquisa'
   },
-  ,
+  {
+    userName: 'Ana Carolina',
+    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    timeSent: '08:48',
+    date: '18/06/2025',
+    subject: 'Iniciar o Projeto de Pesquisa'
+  },
   {
     userName: 'Ana Carolina',
     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -89,7 +96,7 @@ const Progress = () => {
         <div className='self-start px-8'>
           <Tabs aria-label="Tabs with icons" variant="underline">
                   <TabItem active title="Entregas">
-                    <Timeline tasks={tasks}/>
+                    <Timeline tasks={tasks} comments={comments}/>                  
                   </TabItem>
                   <TabItem title="Comentarios">
                     <Comments comments={comments}/>
