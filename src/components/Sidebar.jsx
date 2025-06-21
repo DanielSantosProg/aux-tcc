@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { Home, FileText, Gauge, Speech, Lock, Menu, X } from 'lucide-react';
 import AvatarDropdown from './AvatarDropdown';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAvatarDropdownToggled, setIsAvatarDropdownToggled] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
-
-  const toggleAvatarDropdown = () => {
-    setIsAvatarDropdownToggled(!isAvatarDropdownToggled);
   };
 
   return (
@@ -68,7 +64,14 @@ const Sidebar = () => {
                 >
                   <Gauge className="text-gray-400" size={22} />
                   <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Progresso</span>
-                  <Lock className="text-gray-400" size={16} />
+                  {isUserLoggedIn ? (
+                    <span className="inline-flex items-center justify-center w-5 h-5 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
+                      3
+                    </span>
+                  ): (
+                    <Lock className="text-gray-400" size={16} />
+                  )}
+                  
                 </a>
               </li>
               
@@ -79,9 +82,6 @@ const Sidebar = () => {
                 >
                   <FileText className="text-gray-400" size={22} />
                   <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Documentos</span>
-                  <span className="inline-flex items-center justify-center w-5 h-5 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
-                    3
-                  </span>
                 </a>
               </li>
               

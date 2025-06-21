@@ -12,6 +12,7 @@ import Progress from './pages/Progress/Progress';
 import Documents from './pages/Documents/Documents';
 import Orientadores from './pages/Orientadores/Orientadores';
 import Orientador from './pages/Orientador/Orientador';
+import UserConfigModal from './components/UserConfigModal';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>        
         <div className="flex min-h-screen">
           <Sidebar />
+          <UserConfigModal />
           <ThemeConfig dark={false} />
           <div className='ml-2 sm:ml-64'>
             <LoginModal />
