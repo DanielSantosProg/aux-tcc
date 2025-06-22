@@ -56,8 +56,8 @@ const Orientadores = () => {
       <h1 className="text-5xl m-0 self-start text-start font-extrabold text-emerald-500 pt-8 px-16">Orientadores</h1>
       <p className="text-gray-600 py-4 px-16">Lista de orientadores e sua disponibilidade</p>
 
-        <div className="ml-8 mt-4 bg-white rounded-lg shadow-sm border">
-          <div className="bg-gray-50 px-8 py-4 border-b border-gray-200 rounded-t-lg">
+        <div className="ml-8 mt-4 bg-white rounded-lg shadow-sm">
+          <div className="bg-gray-50 px-8 py-4 border-b border-gray-100 rounded-t-lg">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold text-gray-800">Nome do Orientador</h3>
               <h3 className="text-lg font-semibold text-gray-800">Disponibilidade</h3>

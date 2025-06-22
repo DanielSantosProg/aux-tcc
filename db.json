@@ -1,0 +1,26 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "Daniel Silva Santos",
+        "email": "20201bsifsa0001@ifba.edu.br",
+        "userType": "orientando",
+        "password": "123"
+      },
+      {
+        "id": 2,
+        "name": "Ana Carolina Sokolonski",
+        "email": "carolsoko@ifba.edu.br",
+        "number": "orientador",
+        "password": "321"
+      },
+      {
+        "id": 3,
+        "name": "Neide Santos",
+        "email": "neide.santos@ifba.edu.br",
+        "number": "admin",
+        "password": "123"
+      }
+    ]
+  }
+  
