@@ -11,14 +11,14 @@
         "id": 2,
         "name": "Ana Carolina Sokolonski",
         "email": "carolsoko@ifba.edu.br",
-        "number": "orientador",
+        "userType": "orientador",
         "password": "321"
       },
       {
         "id": 3,
         "name": "Neide Santos",
         "email": "neide.santos@ifba.edu.br",
-        "number": "admin",
+        "userType": "admin",
         "password": "123"
       }
     ]

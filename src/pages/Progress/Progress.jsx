@@ -90,8 +90,9 @@ const Progress = () => {
 ]);
 
   return (
-    <div className='flex overflow-y-auto flex-col items-center w-full bg-white'>
-        <h1 className='text-5xl m-0 self-start text-start font-extrabold text-emerald-500 py-8 px-16'>Progresso</h1>        
+    <div className='flex overflow-y-auto flex-col max-w-7xl w-full bg-white'>
+        <h1 className='text-5xl m-0 self-start text-start font-extrabold text-emerald-500 pt-8 px-16'>Progresso</h1>
+        <p className="text-gray-600 py-4 px-16">Acompanhe o seu progresso, interaja com seu orientador e faça a entrega das tarefas.</p>       
         <ProgressStepper />
         <div className='self-start px-8'>
           <Tabs aria-label="Tabs with icons" variant="underline">

@@ -10,6 +10,7 @@ import Sidebar from './components/Sidebar';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
 import Progress from './pages/Progress/Progress';
+import Solicitacoes from './pages/Solicitacoes/Solicitacoes';
 import Documents from './pages/Documents/Documents';
 import Orientadores from './pages/Orientadores/Orientadores';
 import Orientador from './pages/Orientador/Orientador';
@@ -44,9 +45,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Home data={data} />} />
               <Route path="/progresso" element={<Progress data={data} />} />
+              <Route path="/solicitacoes" element={<Solicitacoes />} />
               <Route path="/documentos" element={<Documents />} />
               <Route path="/orientadores" element={<Orientadores data={data} />} />
-              <Route path="/orientador/:nome" element={<Orientador data={data} />} />              
+              <Route path="/orientador/:nome" element={<Orientador data={data} />} />           
             </Routes>
           </div>          
         </div>

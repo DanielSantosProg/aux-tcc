@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Home, FileText, Gauge, Speech, Lock, Menu, X, LogIn, UserRoundCog } from 'lucide-react';
+import { Home, FileText, Gauge, Speech, Lock, Menu, X, LogIn, UserRoundCog, UserRoundPlus } from 'lucide-react';
 
 const Sidebar = ({user, logout}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -89,6 +89,17 @@ const Sidebar = ({user, logout}) => {
                   
                 </a>
               </li>
+              {user?.userType == "orientador" && 
+                <li>
+                  <a 
+                    href="/solicitacoes" 
+                    className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
+                  >
+                    <UserRoundPlus className="text-gray-400" size={22} />
+                    <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">Solicitações</span>
+                  </a>
+                </li>
+              }              
               
               <li>
                 <a 
