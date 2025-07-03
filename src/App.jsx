@@ -48,7 +48,7 @@ function App() {
               <Route path="/solicitacoes" element={<Solicitacoes />} />
               <Route path="/documentos" element={<Documents />} />
               <Route path="/orientadores" element={<Orientadores data={data} />} />
-              <Route path="/orientador/:nome" element={<Orientador data={data} />} />           
+              <Route path="/orientador/:nome" element={<Orientador data={data} user={user} />} />           
             </Routes>
           </div>          
         </div>

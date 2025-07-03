@@ -9,7 +9,7 @@ const Orientadores = () => {
       qtd_orientandos: 5,
       max_orientandos: 10,
       tot_orientacoes: 18,
-      email: 'anacarolina@ifba.edu.br',
+      email: 'carolsoko@ifba.edu.br',
       formacao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       area_atuacao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. '
     },

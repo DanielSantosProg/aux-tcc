@@ -1,26 +1,65 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "Daniel Silva Santos",
-        "email": "20201bsifsa0001@ifba.edu.br",
-        "userType": "orientando",
-        "password": "123"
-      },
-      {
-        "id": 2,
-        "name": "Ana Carolina Sokolonski",
-        "email": "carolsoko@ifba.edu.br",
-        "userType": "orientador",
-        "password": "321"
-      },
-      {
-        "id": 3,
-        "name": "Neide Santos",
-        "email": "neide.santos@ifba.edu.br",
-        "userType": "admin",
-        "password": "123"
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": 1,
+      "name": "Daniel Silva Santos",
+      "email": "20201bsifsa0001@ifba.edu.br",
+      "userType": "orientando",
+      "password": "123"
+    },
+    {
+      "id": 2,
+      "name": "Ana Carolina Sokolonski",
+      "email": "carolsoko@ifba.edu.br",
+      "userType": "orientador",
+      "password": "321",
+      "orientandos": [
+        {
+          "id": 4,
+          "name": "Lucas da Silva",
+          "email": "20241bsifsa0001@ifba.edu.br",
+          "userType": "orientando",
+          "password": "123"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Neide Santos",
+      "email": "neide.santos@ifba.edu.br",
+      "userType": "admin",
+      "password": "123"
+    },
+    {
+      "id": 4,
+      "name": "Lucas da Silva",
+      "email": "20241bsifsa0001@ifba.edu.br",
+      "userType": "orientando",
+      "password": "123"
+    }
+  ],
+  "solicitacoes": [
+    {
+      "id": 1751579878504,
+      "nomeEstudante": "Daniel Silva Santos",
+      "emailEstudante": "20201bsifsa0001@ifba.edu.br",
+      "orientadorEmail": "carolsoko@ifba.edu.br",
+      "orientadorNome": "Ana Carolina",
+      "temaTCC": "dw",
+      "descricao": "eweqw",
+      "dataSolicitacao": "03/07/2025",
+      "status": "pendente"
+    },
+    {
+      "id": 1751580170540,
+      "nomeEstudante": "Daniel Silva Santos",
+      "emailEstudante": "20201bsifsa0001@ifba.edu.br",
+      "orientadorEmail": "neide@ifba.edu.br",
+      "orientadorNome": "Neide",
+      "temaTCC": "Novo teste",
+      "descricao": "Teste",
+      "dataSolicitacao": "03/07/2025",
+      "status": "pendente"
+    }
+  ]
+}

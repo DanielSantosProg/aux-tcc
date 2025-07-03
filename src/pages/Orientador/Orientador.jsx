@@ -1,13 +1,79 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { UserPen, Mail, GraduationCap, Briefcase, Users, BookOpenCheck } from 'lucide-react'
+import SolicitarOrientacaoModal from '../../components/SolicitarOrientacaoModal'
 
-const Orientador = () => {
+const Orientador = ({user, data}) => {
     const { nome } = useParams()
     const location = useLocation()
     const orientador = location.state?.orientador
-    const available = orientador.qtd_orientandos < orientador.max_orientandos ? true : false
+    const available = (orientador.qtd_orientandos < orientador.max_orientandos) ? true : false
+    const [currUserOrientando, setCurrUserOrientando] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [hasSolicitacao, setHasSolicitacao] = useState(false);
 
+    const defOrientando = () => {
+      if (!data || !orientador || !user) return;
+    
+      // Encontra o orientador no array data pelo email
+      const foundOrientador = data.find(u => u.email === orientador.email);
+    
+      if (!foundOrientador || !foundOrientador.orientandos) {
+        setCurrUserOrientando(false);
+        return;
+      }
+    
+      // Verifica se algum orientando tem o mesmo email do user atual
+      const isUserOrientando = foundOrientador.orientandos.some(
+        orientando => orientando.email === user.email
+      );
+    
+      setCurrUserOrientando(isUserOrientando);
+      console.log('currUserOrientando:', isUserOrientando);
+    };
+
+    const handleSolicitarOrientacao = () => {
+      setShowModal(true);
+      const modal = document.getElementById('solicitar-orientacao-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    };
+
+    const handleCloseModal = () => {
+      setShowModal(false);
+      const modal = document.getElementById('solicitar-orientacao-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    const verificarSolicitacaoExistente = async () => {
+      if (!user || !orientador) return;
+    
+      try {
+        const response = await fetch(`http://localhost:8000/solicitacoes?emailEstudante=${encodeURIComponent(user.email)}&orientadorEmail=${encodeURIComponent(orientador.email)}`);
+        if (!response.ok) throw new Error('Erro ao buscar solicitações');
+    
+        const dados = await response.json();
+    
+        // Se o array de dados não estiver vazio, significa que já existe solicitação
+        setHasSolicitacao(dados.length > 0);
+    
+      } catch (error) {
+        console.error('Erro ao verificar solicitações:', error);
+        setHasSolicitacao(false); // ou trate de outra forma
+      }
+    };
+    
+    
+
+    useEffect(() => {
+          defOrientando()
+          verificarSolicitacaoExistente();
+        }, [data, orientador, user]);
     return (
       <div className="flex flex-col p-10 w-6xl items-start">
         <div className="space-y-2">
@@ -45,7 +111,7 @@ const Orientador = () => {
                 
                 <div className="flex items-center gap-3 mt-4">
                   <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
-                    available 
+                    available
                       ? 'bg-blue-100 text-blue-800' 
                       : 'bg-red-100 text-red-800'
                   }`}>
@@ -116,18 +182,28 @@ const Orientador = () => {
               
               <button
                 type="button"
-                disabled={!available}
+                disabled={!available || currUserOrientando}
+                onClick={handleSolicitarOrientacao}
                 className={`px-5 py-2.5 text-sm font-medium rounded-lg focus:ring-4 focus:outline-none ${
-                  available
+                  available && !currUserOrientando && !hasSolicitacao
                     ? 'text-white bg-green-700 hover:bg-green-800 focus:ring-green-300'
                     : 'text-gray-500 bg-gray-300 cursor-not-allowed'
                 }`}
               >
-                {available ? 'Solicitar Orientação' : 'Indisponível'}
+                {available && !currUserOrientando && !hasSolicitacao ? 'Solicitar Orientação' : 'Indisponível'}
               </button>
             </div>
           </div>
         </div>
+
+        {/* Modal */}
+        {showModal && (
+          <SolicitarOrientacaoModal 
+            user={user}
+            orientador={orientador}
+            onClose={handleCloseModal}
+          />
+        )}
       </div>
     )
   }
