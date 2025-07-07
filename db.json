@@ -15,6 +15,13 @@
       "password": "321",
       "orientandos": [
         {
+          "id": 1,
+          "name": "Daniel Silva Santos",
+          "email": "20201bsifsa0001@ifba.edu.br",
+          "userType": "orientando",
+          "password": "123"
+        },
+        {
           "id": 4,
           "name": "Lucas da Silva",
           "email": "20241bsifsa0001@ifba.edu.br",
@@ -61,5 +68,41 @@
       "dataSolicitacao": "03/07/2025",
       "status": "pendente"
     }
-  ]
+  ],
+  "tasks": [{
+    "day": "1",
+    "date": "Janeiro 2025",
+    "title": "Enviar a Carta de Aceite",
+    "description": "Faça o download do documento da carta de aceite no site e me envie com sua assinatura, para que eu assine.",
+    "orientandoEmail": "20201bsifsa0001@ifba.edu.br"
+  },
+  {
+    "day": "15",
+    "date": "Fevereiro 2025",
+    "title": "Anexar a Carta de Aceite",
+    "description": "Insira a carta de aceite já na área de documentos, seção de entrega.",
+    "orientandoEmail": "20201bsifsa0001@ifba.edu.br"      
+  },
+  {
+    "day": "8",
+    "date": "Março 2025",
+    "title": "Buscar Referências Bibliográficas",
+    "description": "Vá atrás de referências bibliográficas que lidem com o assunto do seu tcc, coloque em um documento e entregue aqui.",
+    "orientandoEmail": "20201bsifsa0001@ifba.edu.br"
+  },    
+  {
+    "day": "3",
+    "date": "Abril 2025",
+    "title": "Iniciar o Projeto de Pesquisa",
+    "description": "Comece a digitar o seu Projeto de Pesquisa, tomando como base as referências bibliográficas encontradas.",
+    "orientandoEmail": "20201bsifsa0001@ifba.edu.br"      
+  },    
+  {
+    "day": "16",
+    "date": "Maio 2025",
+    "title": "Fazer alterações na Introdução do Projeto",
+    "description": "A introdução que foi feita está caminhando, mas ainda falta adicionar mais citações para enriquecer a sua argumentação.",
+    "orientandoEmail": "20201bsifsa0001@ifba.edu.br"
+  }    
+]
 }

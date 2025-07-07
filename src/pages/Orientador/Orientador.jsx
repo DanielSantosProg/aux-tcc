@@ -64,11 +64,10 @@ const Orientador = ({user, data}) => {
     
       } catch (error) {
         console.error('Erro ao verificar solicitações:', error);
-        setHasSolicitacao(false); // ou trate de outra forma
+        setHasSolicitacao(false);
       }
     };
-    
-    
+        
 
     useEffect(() => {
           defOrientando()
@@ -185,12 +184,12 @@ const Orientador = ({user, data}) => {
                 disabled={!available || currUserOrientando}
                 onClick={handleSolicitarOrientacao}
                 className={`px-5 py-2.5 text-sm font-medium rounded-lg focus:ring-4 focus:outline-none ${
-                  available && !currUserOrientando && !hasSolicitacao
+                  available && !currUserOrientando && !hasSolicitacao && user
                     ? 'text-white bg-green-700 hover:bg-green-800 focus:ring-green-300'
                     : 'text-gray-500 bg-gray-300 cursor-not-allowed'
                 }`}
               >
-                {available && !currUserOrientando && !hasSolicitacao ? 'Solicitar Orientação' : 'Indisponível'}
+                {available && !currUserOrientando && !hasSolicitacao && user ? 'Solicitar Orientação' : 'Indisponível'}
               </button>
             </div>
           </div>

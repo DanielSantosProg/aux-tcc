@@ -1,50 +1,17 @@
 import ProgressStepper from '../../components/ProgressStepper'
 import Timeline from '../../components/Timeline'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Tabs, TabItem } from 'flowbite-react'
 import Comments from '../../components/Comments'
 import CommentsModal from '../../components/CommentsModal'
+import TimelineDropdown from '../../components/TimelineDropdown'
 
-const Progress = () => {
-  const [showModal, setShowModal] = useState(true)
-  const [selectedSubject, setSelectedSubject] = useState('')
-
-  const handleOpenComments = (subject) => {
-    setSelectedSubject(subject)
-    setShowModal(true)
-  }
-
-  const [tasks, setTasks] = useState([{
-      day: '1',
-      date: 'Janeiro 2025',
-      title: 'Enviar a Carta de Aceite',
-      description: 'Faça o download do documento da carta de aceite no site e me envie com sua assinatura, para que eu assine.'      
-    },
-    {
-      day: '15',
-      date: 'Fevereiro 2025',
-      title: 'Anexar a Carta de Aceite',
-      description: 'Insira a carta de aceite já na área de documentos, seção de entrega.'      
-    },
-    {
-      day: '8',
-      date: 'Março 2025',
-      title: 'Buscar Referências Bibliográficas',
-      description: 'Vá atrás de referências bibliográficas que lidem com o assunto do seu tcc, coloque em um documento e entregue aqui.'      
-    },    
-    {
-      day: '3',
-      date: 'Abril 2025',
-      title: 'Iniciar o Projeto de Pesquisa',
-      description: 'Comece a digitar o seu Projeto de Pesquisa, tomando como base as referências bibliográficas encontradas.'      
-    },    
-    {
-      day: '16',
-      date: 'Maio 2025',
-      title: 'Fazer alterações na Introdução do Projeto',
-      description: 'A introdução que foi feita está caminhando, mas ainda falta adicionar mais citações para enriquecer a sua argumentação.'      
-    },    
-  ]);
+const Progress = ({user}) => {
+  const [selectedOrientandoEmail, setSelectedOrientandoEmail] = useState(
+    user?.userType === 'orientando' ? user.email : null
+  );
+  const [selectedSubjectEmail, setSelectedSubjectEmail] = useState(selectedOrientandoEmail);
+  const [tasks, setTasks] = useState([]);
   const [comments, setComments] = useState([{
     userName: 'Ana Carolina',
     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -89,19 +56,63 @@ const Progress = () => {
   },
 ]);
 
+  useEffect(() => {
+    if (selectedOrientandoEmail) {
+      setSelectedSubjectEmail(selectedOrientandoEmail);
+    }
+  }, [selectedOrientandoEmail]);
+  useEffect(() => {
+          const getTasks = async () => {
+            if (!user) return;
+            let email;
+            if (user.userType == "orientando"){
+              email = user.email
+              setSelectedSubjectEmail(email)
+            } else {
+              email = selectedSubjectEmail;
+            }
+      
+            try {
+              const response = await fetch(`http://localhost:8000/tasks?orientandoEmail=${encodeURIComponent(email)}`);
+              if (!response.ok) throw new Error('Erro ao buscar solicitações');
+      
+              const dados = await response.json();
+              console.log(dados)
+              setTasks(dados);
+            } catch (error) {
+              console.error('Erro ao buscar solicitações:', error);
+              setTasks([]);
+            }
+          };
+      
+          getTasks();
+        }, [user, selectedSubjectEmail]);
   return (
-    <div className='flex overflow-y-auto flex-col max-w-7xl w-full bg-white'>
+    <div className='flex overflow-hidden flex-col max-w-7xl w-full bg-white'>
         <h1 className='text-5xl m-0 self-start text-start font-extrabold text-emerald-500 pt-8 px-16'>Progresso</h1>
         <p className="text-gray-600 py-4 px-16">Acompanhe o seu progresso, interaja com seu orientador e faça a entrega das tarefas.</p>       
         <ProgressStepper />
-        <div className='self-start px-8'>
+        <div className='self-start px-8 w-full'>
+          {user?.userType == "orientador" && (
+            <div className="flex self-center justify-center">
+              <TimelineDropdown 
+                user={user} 
+                onSelectOrientando={(orientando) => setSelectedOrientandoEmail(orientando.email)} 
+              />
+            </div>            
+          )}          
           <Tabs aria-label="Tabs with icons" variant="underline">
-                  <TabItem active title="Entregas">
-                    <Timeline tasks={tasks} comments={comments}/>                  
-                  </TabItem>
-                  <TabItem title="Comentarios">
-                    <Comments comments={comments}/>
-                  </TabItem>
+            <TabItem active title="Entregas">
+              {tasks.length == 0 && (
+                <div className="flex justify-center">
+                  <span>Nada a ser mostrado ainda.</span>
+                </div>
+              )}
+              <Timeline tasks={tasks} comments={comments}/>                  
+            </TabItem>
+            <TabItem title="Comentarios">
+              <Comments comments={comments}/>
+            </TabItem>
           </Tabs>
         </div>        
     </div>

@@ -44,7 +44,7 @@ function App() {
             <RegisterModal />
             <Routes>
               <Route path="/" element={<Home data={data} />} />
-              <Route path="/progresso" element={<Progress data={data} />} />
+              <Route path="/progresso" element={<Progress data={data} user={user}/>} />
               <Route path="/solicitacoes" element={<Solicitacoes />} />
               <Route path="/documentos" element={<Documents />} />
               <Route path="/orientadores" element={<Orientadores data={data} />} />
