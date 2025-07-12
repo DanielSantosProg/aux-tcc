@@ -7,6 +7,7 @@ const Orientador = ({user, data}) => {
     const { nome } = useParams()
     const location = useLocation()
     const orientador = location.state?.orientador
+    const isUserOrientador = user?.userType == "orientador"
     const available = (orientador.qtd_orientandos < orientador.max_orientandos) ? true : false
     const [currUserOrientando, setCurrUserOrientando] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -179,6 +180,7 @@ const Orientador = ({user, data}) => {
                 </div>
               </div>
               
+              {!isUserOrientador && 
               <button
                 type="button"
                 disabled={!available || currUserOrientando}
@@ -191,6 +193,8 @@ const Orientador = ({user, data}) => {
               >
                 {available && !currUserOrientando && !hasSolicitacao && user ? 'Solicitar Orientação' : 'Indisponível'}
               </button>
+              }
+              
             </div>
           </div>
         </div>

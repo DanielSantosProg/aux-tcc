@@ -55,6 +55,7 @@ const Progress = ({user}) => {
     subject: 'Buscar Referências Bibliográficas'
   },
 ]);
+const isOrientando = user?.userType === 'orientando'
 
   useEffect(() => {
     if (selectedOrientandoEmail) {
@@ -103,12 +104,12 @@ const Progress = ({user}) => {
           )}          
           <Tabs aria-label="Tabs with icons" variant="underline">
             <TabItem active title="Entregas">
-              {tasks.length == 0 && (
+              {!selectedSubjectEmail && (
                 <div className="flex justify-center">
                   <span>Nada a ser mostrado ainda.</span>
                 </div>
               )}
-              <Timeline tasks={tasks} comments={comments}/>                  
+              <Timeline tasks={tasks} comments={comments} isOrientando={isOrientando} subject={selectedSubjectEmail}/>                  
             </TabItem>
             <TabItem title="Comentarios">
               <Comments comments={comments}/>

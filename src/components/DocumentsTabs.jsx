@@ -37,8 +37,10 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                 Documento para assinatura do orientador
                             </td>
                             <td class="px-6 py-4">
-                                <Download className='text-gray-800' size={18}/>
-                            </td>
+                                <a href="#">
+                                    <Download className='text-gray-800' size={18}/>
+                                </a>                                
+                            </td>                            
                         </tr>
                         <tr class="bg-white border-b border-gray-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -51,7 +53,9 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                 Template opcional para ser usado na criação do projeto de pesquisa
                             </td>
                             <td class="px-6 py-4">
-                                <Download className='text-gray-800' size={18}/>
+                                <a href="#">
+                                    <Download className='text-gray-800' size={18}/>
+                                </a>                                
                             </td>
                         </tr>
                         <tr class="bg-white">
@@ -65,7 +69,9 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                 Conjunto de normas ABNT importantes para o processo de criação de monografia
                             </td>
                             <td class="px-6 py-4">
-                                <Download className='text-gray-800' size={18}/>
+                                <a href="#">
+                                    <Download className='text-gray-800' size={18}/>
+                                </a>                                
                             </td>
                         </tr>
                     </tbody>
@@ -104,7 +110,9 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                     Não Entregue
                                 </td>
                                 <td class="px-6 py-4">
-                                    <FileUp className='text-gray-800' size={18}/>
+                                    <a href="#">
+                                        <FileUp className='text-gray-800' size={18}/>
+                                    </a>                                
                                 </td>
                             </tr>
                             <tr class="bg-white border-b border-gray-200">
@@ -118,7 +126,9 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                     Não Entregue
                                 </td>
                                 <td class="px-6 py-4">
-                                    <FileUp className='text-gray-800' size={18}/>
+                                    <a href="#">
+                                        <FileUp className='text-gray-800' size={18}/>
+                                    </a>                                
                                 </td>
                             </tr>
                             <tr class="bg-white">
@@ -132,7 +142,9 @@ const DocumentsTabs = ({UserLoggedIn}) => {
                                     Não Entregue
                                 </td>
                                 <td class="px-6 py-4">
-                                    <FileUp className='text-gray-800' size={18}/>
+                                    <a href="#">
+                                        <FileUp className='text-gray-800' size={18}/>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
