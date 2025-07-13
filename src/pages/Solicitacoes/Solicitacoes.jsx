@@ -122,7 +122,7 @@ const Solicitacoes = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center text-sm text-gray-500">
                                                 <Calendar className="w-4 h-4 mr-2" />
-                                                {formatDate(solicitacao.datasolicitacao)}
+                                                {formatDate(solicitacao.dataSolicitacao)}
                                             </div>
                                         </td>
 

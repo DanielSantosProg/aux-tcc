@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
 
-const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = true }) => {
+const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = false }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     date: '',
-    day: ''
+    day: '',
+    id: null,
+    orientandoEmail: ''
   });
 
   useEffect(() => {
@@ -15,14 +17,18 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = tr
         title: taskToEdit.title || '',
         description: taskToEdit.description || '',
         date: taskToEdit.date || '',
-        day: taskToEdit.day || ''
+        day: taskToEdit.day || '',
+        id: taskToEdit.id || null,
+        orientandoEmail: taskToEdit.orientandoEmail || ''
       });
     } else {
       setFormData({
         title: '',
         description: '',
         date: '',
-        day: ''
+        day: '',
+        id: null,
+        orientandoEmail: ''
       });
     }
   }, [isEdit, taskToEdit, isOpen]);
@@ -37,13 +43,23 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = tr
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validação simples
     if (
       formData.title.trim() &&
       formData.description.trim() &&
       formData.date.trim() &&
       formData.day.trim()
     ) {
-      onSave(formData);
+      // Passa o objeto completo para onSave, incluindo id e orientandoEmail
+      onSave({
+        id: formData.id,
+        orientandoEmail: formData.orientandoEmail,
+        title: formData.title,
+        description: formData.description,
+        date: formData.date,
+        day: formData.day
+      });
       onClose();
     }
   };
@@ -118,7 +134,7 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = tr
                 value={formData.date}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Ex: 15 de Dezembro"
+                placeholder="Ex: Janeiro 2025"
                 required
               />
             </div>

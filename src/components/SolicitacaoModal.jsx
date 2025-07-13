@@ -85,7 +85,7 @@ const SolicitacaoModal = ({ solicitacao, aberto, onClose }) => {
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-gray-400" />
                 <span className="font-medium text-gray-700">Data da solicitação:</span>
-                <span className="text-gray-600">{formatDate(solicitacao.datasolicitacao) || 'N/A'}</span>
+                <span className="text-gray-600">{formatDate(solicitacao.dataSolicitacao) || 'N/A'}</span>
               </div>
             </div>
           </div>
