@@ -1,68 +1,61 @@
+import { apiFetch } from "../api/http";
 
-import React, { useState } from 'react'
-import { Calendar, User, BookOpen, Mail, Send } from 'lucide-react'
+import React, { useState } from "react";
+import { Calendar, User, BookOpen, Mail, Send } from "lucide-react";
 
 const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
-  const [titulo, setTitulo] = useState('')
-  const [mensagem, setMensagem] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [titulo, setTitulo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!user || !orientador) return null
+  if (!user || !orientador) return null;
 
   const getCurrentDate = () => {
-    return new Date().toLocaleDateString('pt-BR')
-  }
+    return new Date().toLocaleDateString("pt-BR");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     const solicitacao = {
-      id: Date.now(),
-      nomeEstudante: user.name,
-      emailEstudante: user.email,
-      orientadorEmail: orientador.email,
-      orientadorNome: orientador.nome,
+      orientando_id: user.id,
+      orientador_id: orientador.id,
       temaTCC: titulo,
       descricao: mensagem,
-      dataSolicitacao: getCurrentDate(),
-      status: 'Pendente'
     };
-  
+
     try {
-      const response = await fetch('http://localhost:8000/solicitacoes', {
-        method: 'POST',
+      const data = await apiFetch("http://localhost:3001/api/solicitacoes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(solicitacao)
+        body: JSON.stringify(solicitacao),
       });
-  
-      if (!response.ok) {
-        throw new Error(`Erro na requisição: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      console.log('Solicitação enviada com sucesso:', data);
-  
-      alert('Solicitação enviada com sucesso!');
+
+      console.log("Solicitação enviada com sucesso:", data);
+      alert("Solicitação enviada com sucesso!");
       onClose();
-  
+      window.location.reload();
     } catch (error) {
-      console.error('Erro ao enviar solicitação:', error);
-      alert('Erro ao enviar solicitação. Tente novamente.');
+      console.error("Erro ao enviar solicitação:", error);
+      alert(`Erro ao enviar solicitação: ${error.message}`);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   return (
-    <div>        
-      <div id="solicitar-orientacao-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div>
+      <div
+        id="solicitar-orientacao-modal"
+        tabIndex="-1"
+        aria-hidden="true"
+        className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      >
         <div className="relative p-4 w-full max-w-3xl max-h-full">
           <div className="relative bg-white rounded-lg shadow-lg border border-gray-200">
-            
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <div className="flex items-center gap-3">
@@ -71,22 +64,33 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
                   Solicitar Orientação
                 </h3>
               </div>
-              <button 
-                type="button" 
-                className="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center transition-colors" 
+              <button
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center transition-colors"
                 data-modal-hide="solicitar-orientacao-modal"
                 onClick={onClose}
               >
-                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            
+
             {/* Content */}
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
-              
               {/* Student Information */}
               <div className="space-y-4">
                 <h4 className="font-semibold text-gray-900 flex items-center gap-2">
@@ -107,7 +111,9 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
                     <span className="text-gray-600">{getCurrentDate()}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-gray-700">Orientador:</span>
+                    <span className="font-medium text-gray-700">
+                      Orientador:
+                    </span>
                     <span className="text-gray-600">{orientador.nome}</span>
                   </div>
                 </div>
@@ -122,10 +128,13 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
                   <BookOpen className="w-5 h-5 text-emerald-500" />
                   Detalhes da Solicitação
                 </h4>
-                
+
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="titulo"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Título/Tema do TCC *
                     </label>
                     <input
@@ -138,9 +147,12 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
                       required
                     />
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="mensagem"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Descrição/Mensagem *
                     </label>
                     <textarea
@@ -156,19 +168,19 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
                 </div>
               </div>
             </form>
-            
+
             {/* Footer */}
             <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
-              <button 
-                data-modal-hide="solicitar-orientacao-modal" 
-                type="button" 
+              <button
+                data-modal-hide="solicitar-orientacao-modal"
+                type="button"
                 onClick={onClose}
                 className="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-100 transition-colors"
               >
                 Cancelar
               </button>
-              
-              <button 
+
+              <button
                 type="submit"
                 form="solicitar-orientacao-form"
                 disabled={isSubmitting || !titulo.trim() || !mensagem.trim()}
@@ -192,7 +204,7 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SolicitarOrientacaoModal
+export default SolicitarOrientacaoModal;

@@ -1,65 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { X, FileText } from 'lucide-react';
+// src/components/TaskCrudModal.jsx
+import React, { useState, useEffect } from "react";
+import { X, FileText } from "lucide-react";
 
-const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = false }) => {
+const TaskCrudModal = ({
+  isOpen,
+  onClose,
+  onSave,
+  taskToEdit = null,
+  isEdit = false,
+}) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    date: '',
-    day: '',
+    title: "",
+    description: "",
+    dataEntrega: "",
     id: null,
-    orientandoEmail: ''
+    orientando_id: "",
   });
 
   useEffect(() => {
     if (isEdit && taskToEdit) {
+      // ✅ Formata a data para 'YYYY-MM-DD' para o input type="date"
+      const dataEntregaFormatada = taskToEdit.dataEntrega
+        ? new Date(taskToEdit.dataEntrega).toISOString().split("T")[0]
+        : "";
+
       setFormData({
-        title: taskToEdit.title || '',
-        description: taskToEdit.description || '',
-        date: taskToEdit.date || '',
-        day: taskToEdit.day || '',
+        title: taskToEdit.title || "",
+        description: taskToEdit.description || "",
+        dataEntrega: dataEntregaFormatada,
         id: taskToEdit.id || null,
-        orientandoEmail: taskToEdit.orientandoEmail || ''
+        orientando_id: taskToEdit.orientando_id || "",
       });
     } else {
       setFormData({
-        title: '',
-        description: '',
-        date: '',
-        day: '',
+        title: "",
+        description: "",
+        dataEntrega: "",
         id: null,
-        orientandoEmail: ''
+        orientando_id: "",
       });
     }
   }, [isEdit, taskToEdit, isOpen]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validação simples
-    if (
-      formData.title.trim() &&
-      formData.description.trim() &&
-      formData.date.trim() &&
-      formData.day.trim()
-    ) {
-      // Passa o objeto completo para onSave, incluindo id e orientandoEmail
-      onSave({
-        id: formData.id,
-        orientandoEmail: formData.orientandoEmail,
-        title: formData.title,
-        description: formData.description,
-        date: formData.date,
-        day: formData.day
-      });
+    if (formData.title.trim() && formData.dataEntrega.trim()) {
+      onSave(formData);
       onClose();
     }
   };
@@ -78,7 +72,7 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = fa
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
             <FileText className="w-5 h-5 text-emerald-500" />
-            {isEdit ? 'Editar Tarefa' : 'Nova Tarefa'}
+            {isEdit ? "Editar Tarefa" : "Nova Tarefa"}
           </h3>
           <button
             onClick={onClose}
@@ -91,7 +85,10 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = fa
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Título da Tarefa
             </label>
             <input
@@ -107,7 +104,10 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = fa
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Descrição
             </label>
             <textarea
@@ -122,38 +122,22 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = fa
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
-                Data
-              </label>
-              <input
-                type="text"
-                id="date"
-                name="date"
-                value={formData.date}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Ex: Janeiro 2025"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="day" className="block text-sm font-medium text-gray-700 mb-1">
-                Dia
-              </label>
-              <input
-                type="text"
-                id="day"
-                name="day"
-                value={formData.day}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Ex: 15"
-                required
-              />
-            </div>
+          <div>
+            <label
+              htmlFor="dataEntrega"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Data de Entrega
+            </label>
+            <input
+              type="date"
+              id="dataEntrega"
+              name="dataEntrega"
+              value={formData.dataEntrega}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              required
+            />
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
@@ -168,7 +152,7 @@ const TaskCrudModal = ({ isOpen, onClose, onSave, taskToEdit = null, isEdit = fa
               type="submit"
               className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 transition-colors"
             >
-              {isEdit ? 'Salvar Alterações' : 'Criar Tarefa'}
+              {isEdit ? "Salvar Alterações" : "Criar Tarefa"}
             </button>
           </div>
         </form>
