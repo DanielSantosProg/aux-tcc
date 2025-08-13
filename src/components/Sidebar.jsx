@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Home,
   FileText,
@@ -15,11 +16,10 @@ import {
 
 const Sidebar = ({ user, logout }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
   const [erro, setErro] = useState(null);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
     if (user) {
@@ -32,13 +32,61 @@ const Sidebar = ({ user, logout }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      console.log("Usuário:", user.name);
-    }
+    if (user) console.log("Usuário:", user.name);
   }, [user]);
+
+  const getNavLinkClasses = (path) => {
+    const isActive = location.pathname === path;
+    const base =
+      "flex items-center p-3 rounded-lg transition-colors group aux-nav-link";
+    const link = isActive
+      ? `${base} bg-white shadow-sm aux-active`
+      : `${base} hover:bg-white hover:shadow-sm`;
+
+    return {
+      link,
+      icon: "aux-icon text-gray-400",
+      text: "aux-text ms-3 whitespace-nowrap text-gray-500 pr-4",
+    };
+  };
 
   return (
     <>
+      <svg
+        aria-hidden="true"
+        width="0"
+        height="0"
+        style={{ position: "absolute", left: 0, top: 0 }}
+      >
+        <linearGradient id="sidebar-grad" x1="0" x2="1">
+          <stop offset="0" stopColor="#22d3ee" />
+          <stop offset="1" stopColor="#818cf8" />
+        </linearGradient>
+      </svg>
+
+      {/* CSS local para controlar o comportamento do gradiente no texto e no SVG */}
+      <style>{`
+        /* default: ícone usa stroke=currentColor (herda color), texto usa cor sólida (tailwind) */
+        .aux-nav-link svg { stroke: currentColor; }
+
+        /* Hover ou active: aplicar gradiente no SVG e no texto */
+        .aux-nav-link:hover svg,
+        .aux-nav-link.aux-active svg {
+          /* usa o gradiente definido em <defs> */
+          stroke: url(#sidebar-grad);
+        }
+
+        .aux-nav-link:hover .aux-text,
+        .aux-nav-link.aux-active .aux-text {
+          /* aplica o mesmo gradiente visual do AuxTCC ao texto (bg-clip) */
+          background-image: linear-gradient(90deg, #22d3ee, #818cf8);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          font-weight: 700;
+        }
+      `}</style>
+
       {/* Botão para mobile */}
       <button
         onClick={toggleSidebar}
@@ -80,24 +128,22 @@ const Sidebar = ({ user, logout }) => {
           <nav>
             <ul className="space-y-2 font-medium">
               <li>
-                <a
-                  href="/"
-                  className="flex items-center p-3 text-gray-900 rounded-lg hover:bg-emerald-100 hover:text-emerald-700 transition-colors group"
-                >
-                  <Home className="text-emerald-500" size={22} />
-                  <span className="ms-3 text-emerald-600 font-medium">
-                    Home
-                  </span>
+                <a href="/" className={getNavLinkClasses("/").link}>
+                  <Home size={22} className={getNavLinkClasses("/").icon} />
+                  <span className={getNavLinkClasses("/").text}>Home</span>
                 </a>
               </li>
 
               <li>
                 <a
                   href="/progresso"
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
+                  className={getNavLinkClasses("/progresso").link}
                 >
-                  <Gauge className="text-gray-400" size={22} />
-                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">
+                  <Gauge
+                    size={22}
+                    className={getNavLinkClasses("/progresso").icon}
+                  />
+                  <span className={getNavLinkClasses("/progresso").text}>
                     Progresso
                   </span>
                   {user ? (
@@ -109,14 +155,18 @@ const Sidebar = ({ user, logout }) => {
                   )}
                 </a>
               </li>
-              {user?.userType == "orientador" && (
+
+              {user?.userType === "orientador" && (
                 <li>
                   <a
                     href="/solicitacoes"
-                    className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
+                    className={getNavLinkClasses("/solicitacoes").link}
                   >
-                    <UserRoundPlus className="text-gray-400" size={22} />
-                    <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">
+                    <UserRoundPlus
+                      size={22}
+                      className={getNavLinkClasses("/solicitacoes").icon}
+                    />
+                    <span className={getNavLinkClasses("/solicitacoes").text}>
                       Solicitações
                     </span>
                   </a>
@@ -126,10 +176,13 @@ const Sidebar = ({ user, logout }) => {
               <li>
                 <a
                   href="/documentos"
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
+                  className={getNavLinkClasses("/documentos").link}
                 >
-                  <FileText className="text-gray-400" size={22} />
-                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">
+                  <FileText
+                    size={22}
+                    className={getNavLinkClasses("/documentos").icon}
+                  />
+                  <span className={getNavLinkClasses("/documentos").text}>
                     Documentos
                   </span>
                 </a>
@@ -138,10 +191,13 @@ const Sidebar = ({ user, logout }) => {
               <li>
                 <a
                   href="/orientadores"
-                  className="flex items-center p-3 text-gray-500 rounded-lg hover:bg-emerald-100 transition-colors group"
+                  className={getNavLinkClasses("/orientadores").link}
                 >
-                  <Speech className="text-gray-400" size={22} />
-                  <span className="flex-1 text-gray-500 ms-3 whitespace-nowrap">
+                  <Speech
+                    size={22}
+                    className={getNavLinkClasses("/orientadores").icon}
+                  />
+                  <span className={getNavLinkClasses("/orientadores").text}>
                     Orientadores
                   </span>
                 </a>
@@ -149,6 +205,7 @@ const Sidebar = ({ user, logout }) => {
             </ul>
           </nav>
         </div>
+
         <div className="border-t border-green-200 p-4">
           {user ? (
             <div className="flex flex-col">
@@ -165,11 +222,12 @@ const Sidebar = ({ user, logout }) => {
                   </div>
                 </div>
               </a>
+
               <div className="flex flex-row justify-center py-2">
                 <a href="#">
                   <button
                     type="button"
-                    class="focus:outline-none inline-flex text-gray-700 hover:bg-gray-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                    className="focus:outline-none inline-flex text-gray-700 hover:bg-gray-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
                   >
                     <UserRoundCog
                       className="text-gray-700 mr-2 mt-0.5"
@@ -178,10 +236,11 @@ const Sidebar = ({ user, logout }) => {
                     Configurações
                   </button>
                 </a>
+
                 <a href="#" onClick={handleLogout}>
                   <button
                     type="button"
-                    class="focus:outline-none inline-flex text-red-500 hover:bg-red-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                    className="focus:outline-none inline-flex text-red-500 hover:bg-red-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
                   >
                     <LogIn className="text-red-500 mr-2 mt-0.5" size={16} />
                     Sair
@@ -202,7 +261,7 @@ const Sidebar = ({ user, logout }) => {
               >
                 <button
                   type="button"
-                  class="focus:outline-none inline-flex text-white bg-emerald-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  className="focus:outline-none inline-flex text-white bg-emerald-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                 >
                   <LogIn className="text-white mr-2 mt-0.5" size={16} />
                   Login

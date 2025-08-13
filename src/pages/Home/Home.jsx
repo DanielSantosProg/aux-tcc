@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Accordion from "../../components/Accordion";
 import Card from "../../components/Card";
+import { GraduationCap } from "lucide-react";
 
 const Home = () => {
   const [accordionData] = useState([
@@ -20,15 +21,22 @@ const Home = () => {
 
   return (
     <div className="flex overflow-y-auto flex-col items-center w-full bg-white">
-      <h1 className="text-5xl m-0 self-start text-start font-extrabold text-emerald-500 py-8 px-16">
-        Bem Vindo ao portal de auxílio ao TCC.
-      </h1>
-      <p className="px-16 pb-16 text-2xl text-black self-start">
-        Um projeto que busca unir Orientadores e alunos no processo de
-        desenvolvimento do Trabalho de Conclusão de Curso do BSI de Feira de
-        Santana.
-      </p>
-      <div className="flex flex-row justify-evenly w-full">
+      <div className="flex flex-row self-start items-center gap-3 pb-[12px] pt-8 px-16">
+        <div className="flex w-[40px] h-[40px] items-center justify-center bg-gradient-to-r rounded-md from-teal-500 via-teal-400 to-teal-200">
+          <GraduationCap className="text-white" size={24} />
+        </div>
+        <h2 className="text-5xl m-0 self-start text-start font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-600 text-transparent bg-clip-text">
+          Bem Vindo ao portal de auxílio ao TCC.
+        </h2>
+      </div>
+      <div className="max-w-5xl self-start">
+        <p className="px-16 pb-16 text-xl text-black self-start">
+          Um projeto que busca unir Orientadores e alunos no processo de
+          desenvolvimento do Trabalho de Conclusão de Curso do BSI de Feira de
+          Santana.
+        </p>
+      </div>
+      <div className="flex flex-row gap-4 self-center w-full px-16">
         <Card
           title="Documentação"
           page="documentos"

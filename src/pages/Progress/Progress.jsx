@@ -160,9 +160,9 @@ const Progress = ({ user }) => {
         <div className="flex w-[40px] h-[40px] items-center justify-center bg-gradient-to-r rounded-md from-teal-500 via-teal-400 to-teal-200">
           <FastForward className="text-white" size={24} />
         </div>
-        <h1 className="text-5xl m-0 self-start text-start font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-600 text-transparent bg-clip-text">
+        <h2 className="text-5xl m-0 self-start text-start font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-600 text-transparent bg-clip-text">
           Progresso
-        </h1>
+        </h2>
       </div>
 
       <p className="text-gray-600 py-4 px-16">

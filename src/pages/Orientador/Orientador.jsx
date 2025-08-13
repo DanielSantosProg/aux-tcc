@@ -7,6 +7,7 @@ import {
   Briefcase,
   Users,
   BookOpenCheck,
+  ClipboardList,
 } from "lucide-react";
 import SolicitarOrientacaoModal from "../../components/SolicitarOrientacaoModal";
 
@@ -104,9 +105,14 @@ const Orientador = ({ user, data }) => {
   return (
     <div className="flex flex-col p-10 w-6xl items-start">
       <div className="space-y-2">
-        <h1 className="text-5xl m-0 self-start text-start font-extrabold text-emerald-500">
-          Ficha do Orientador
-        </h1>
+        <div className="flex flex-row items-center gap-3 pb-[12px]">
+          <div className="flex w-[40px] h-[40px] items-center justify-center bg-gradient-to-r rounded-md from-teal-500 via-teal-400 to-teal-200">
+            <ClipboardList className="text-white" size={24} />
+          </div>
+          <h2 className="text-5xl m-0 self-start text-start font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-600 text-transparent bg-clip-text">
+            Ficha do Orientador
+          </h2>
+        </div>
         <p className="text-gray-600 pt-2 pb-8">
           Informações detalhadas do orientador acadêmico
         </p>
