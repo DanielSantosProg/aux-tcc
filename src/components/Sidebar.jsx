@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import {
   Home,
   FileText,
@@ -31,9 +31,7 @@ const Sidebar = ({ user, logout }) => {
     }
   };
 
-  useEffect(() => {
-    if (user) console.log("Usuário:", user.name);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   const getNavLinkClasses = (path) => {
     const isActive = location.pathname === path;
@@ -237,15 +235,14 @@ const Sidebar = ({ user, logout }) => {
                   </button>
                 </a>
 
-                <a href="#" onClick={handleLogout}>
-                  <button
-                    type="button"
-                    className="focus:outline-none inline-flex text-red-500 hover:bg-red-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
-                  >
-                    <LogIn className="text-red-500 mr-2 mt-0.5" size={16} />
-                    Sair
-                  </button>
-                </a>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="focus:outline-none inline-flex items-center text-red-500 hover:bg-red-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                >
+                  <LogIn className="text-red-500 mr-2 mt-0.5" size={16} />
+                  <p className="text-red-500">Sair</p>
+                </Link>
               </div>
             </div>
           ) : (

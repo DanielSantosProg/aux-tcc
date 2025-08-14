@@ -1,4 +1,11 @@
-import { FileUp, MessageSquareMore, Plus, Edit, Trash2 } from "lucide-react";
+import {
+  FileUp,
+  MessageSquareMore,
+  Plus,
+  Edit,
+  Trash2,
+  ExternalLink,
+} from "lucide-react";
 import React, { useState, useEffect } from "react";
 import CommentsModal from "./CommentsModal";
 import TaskModal from "./TaskModal";
@@ -87,10 +94,51 @@ export const Timeline = ({
     setIsTaskModalOpen(true);
   };
 
+  const sendAttachmentToBackend = async (taskId, file, link) => {
+    try {
+      // Crie um objeto com os dados a serem enviados
+      const dataToSend = {};
+      // Adicione o link ou arquivo dependendo de qual foi enviado
+      if (link) {
+        dataToSend.link = link;
+      } else if (file) {
+        // Se for um arquivo, você precisará usar FormData
+        // O exemplo abaixo é para o link, mas a lógica para arquivo é similar.
+        // É recomendado usar uma biblioteca como `axios` para facilitar.
+      }
+
+      // A sua rota de backend está esperando `link` no body
+      // Se você quiser enviar o arquivo, precisará de uma rota diferente
+      // que lide com `multipart/form-data`.
+      const response = await fetch(
+        `http://localhost:3001/api/tasks/${taskId}/file_attach`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSend),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao anexar link/arquivo");
+      }
+
+      console.log("Anexo enviado com sucesso!");
+    } catch (error) {
+      console.error("Falha no envio:", error);
+      // Lide com o erro de forma apropriada, talvez exibindo uma mensagem para o usuário
+    }
+  };
+
   const handleTaskCompleted = (taskId, file, link) => {
     // Encontra a tarefa a ser atualizada
     const taskToUpdate = tasks.find((t) => t.id === taskId);
     if (!taskToUpdate) return;
+
+    // Chama a função para enviar o anexo para o backend
+    sendAttachmentToBackend(taskId, file, link); // <-- Nova chamada
 
     // Cria o novo objeto com o status atualizado
     const updatedTaskData = {
@@ -99,6 +147,7 @@ export const Timeline = ({
     };
 
     onTaskUpdate(taskToUpdate, updatedTaskData);
+    setIsTaskModalOpen(false); // Fecha o modal
   };
 
   const defNumComments = () => {
@@ -221,7 +270,7 @@ export const Timeline = ({
                 </div>
 
                 <div className="flex gap-2 mt-2">
-                  {task.status === "pendente" && (
+                  {task.status === "pendente" && isOrientando && (
                     <button
                       type="button"
                       onClick={() => setTitleToSendFileModal(task)}
@@ -231,11 +280,31 @@ export const Timeline = ({
                         className="text-gray-500 mr-2 rtl:rotate-180"
                         size={18}
                       />
-                      <span className="text-gray-700">
-                        {isOrientando ? "Adicionar Envio" : "Visualizar Envio"}
-                      </span>
+                      <span className="text-gray-700">Adicionar Envio</span>
                     </button>
                   )}
+                  {task.status === "concluida" &&
+                    !isOrientando &&
+                    task.envio != null && (
+                      <a
+                        href={
+                          task.envio.startsWith("http://") ||
+                          task.envio.startsWith("https://")
+                            ? task.envio
+                            : `http://${task.envio}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-gray-700"
+                      >
+                        <ExternalLink
+                          className="text-gray-500 mr-2 rtl:rotate-180"
+                          size={18}
+                        />
+                        <span className="text-gray-700">Acessar o Envio</span>
+                      </a>
+                    )}
                   <button
                     type="button"
                     onClick={() => handleComments(task)}
@@ -275,6 +344,7 @@ export const Timeline = ({
           isOpen={isTaskModalOpen}
           onClose={() => setIsTaskModalOpen(false)}
           onTaskCompleted={handleTaskCompleted}
+          isOrientando={isOrientando}
         />
       )}
       <TaskCrudModal

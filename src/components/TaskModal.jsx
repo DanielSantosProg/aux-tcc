@@ -1,26 +1,30 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Button,
-  Label,
-  TextInput,
-} from "flowbite-react";
-import { Link, CheckCircle2 } from "lucide-react"; // Adicionamos o ícone CheckCircle2
+import { Modal, ModalBody, ModalHeader, Button, Label } from "flowbite-react";
+import { Link, CheckCircle2 } from "lucide-react";
 
-const TaskModal = ({ task, isOpen, onClose, onTaskCompleted }) => {
+const TaskModal = ({
+  task,
+  isOpen,
+  onClose,
+  onTaskCompleted,
+  isOrientando,
+}) => {
   const [file, setFile] = useState(null);
   const [link, setLink] = useState("");
-  const [linkAttached, setLinkAttached] = useState(false); // Novo estado para o link
+  const [linkAttached, setLinkAttached] = useState(false);
+  const [fileAttached, setFileAttached] = useState(false);
+
+  const linkPlaceholder = fileAttached
+    ? "Arquivo já anexado."
+    : "Cole aqui o Link para o seu arquivo";
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    setFileAttached(true);
   };
 
   const handleLinkChange = (e) => {
     setLink(e.target.value);
-    // Reseta o estado de 'linkAttached' se o usuário começar a digitar novamente
     setLinkAttached(false);
   };
 
@@ -47,6 +51,7 @@ const TaskModal = ({ task, isOpen, onClose, onTaskCompleted }) => {
               id="file_input"
               type="file"
               onChange={handleFileChange}
+              disabled={linkAttached}
               className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
             />
           </div>
@@ -61,7 +66,6 @@ const TaskModal = ({ task, isOpen, onClose, onTaskCompleted }) => {
           <div>
             <Label htmlFor="link_input" value="Insira o link" />
             <div className="relative flex flex-row">
-              {/* ✅ Botão para anexar o link */}
               <button
                 onClick={handleAttachLink}
                 className="w-16 h-10 inset-y-0 bg-gray-800 focus:outline-none flex items-center justify-center pl-3 pr-3 rounded-l-sm hover:bg-gray-700"
@@ -69,7 +73,6 @@ const TaskModal = ({ task, isOpen, onClose, onTaskCompleted }) => {
                 <Link className="w-4 h-4 text-white" />
               </button>
 
-              {/* ✅ Renderização condicional do input ou do texto */}
               {linkAttached ? (
                 <div className="flex items-center rounded-r-sm w-full text-sm bg-gray-100 pl-4">
                   <CheckCircle2 className="text-emerald-500 mr-2" size={16} />
@@ -79,10 +82,11 @@ const TaskModal = ({ task, isOpen, onClose, onTaskCompleted }) => {
                 <input
                   id="link_input"
                   type="text"
-                  placeholder="Cole aqui o Link para o seu arquivo"
+                  placeholder={linkPlaceholder}
                   value={link}
                   onChange={handleLinkChange}
-                  className="rounded-r-sm w-2xl text-sm"
+                  disabled={fileAttached}
+                  className="rounded-r-sm w-2xl text-sm disabled:bg-gray-300"
                 />
               )}
             </div>

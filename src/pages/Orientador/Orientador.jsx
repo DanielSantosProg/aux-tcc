@@ -89,19 +89,7 @@ const Orientador = ({ user, data }) => {
     checkData();
   }, [data, orientador, user]);
 
-  useEffect(() => {
-    console.log("Estado atualizado:");
-    console.log("CurrUserOrientando:", currUserOrientando);
-    console.log("available:", available);
-    console.log("hasSolicitacao:", hasSolicitacao);
-    console.log("user:", user);
-    console.log("---");
-
-    // A lógica de exibição do botão depende diretamente desses três estados
-    const shouldShowButton =
-      available && !currUserOrientando && !hasSolicitacao && user;
-    console.log("O botão deve estar disponível:", shouldShowButton);
-  }, [currUserOrientando, available, hasSolicitacao, user]);
+  useEffect(() => {}, [currUserOrientando, available, hasSolicitacao, user]);
   return (
     <div className="flex flex-col p-10 w-6xl items-start">
       <div className="space-y-2">

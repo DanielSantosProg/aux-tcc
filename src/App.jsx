@@ -28,11 +28,7 @@ function App() {
   );
   const { user, login, logout } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (data) {
-      console.log("Primeiro usuário:", data[0]?.name);
-    }
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   return (
     <div className="min-h-screen flex-row">
