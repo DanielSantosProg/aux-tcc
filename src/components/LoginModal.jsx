@@ -6,7 +6,7 @@ const LoginModal = ({ data, login }) => {
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
-    console.log(data);
+    console.log("Dados Carregados...");
   }, [data]);
 
   const handleSubmit = async (e) => {

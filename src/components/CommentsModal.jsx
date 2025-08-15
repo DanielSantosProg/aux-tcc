@@ -12,17 +12,19 @@ const CommentsModal = ({
   title,
   isOrientando,
   onSendComment,
+  taskId,
 }) => {
   const [newComment, setNewComment] = useState("");
   const [filteredComments, setFilteredComments] = useState([]); // Novo estado para os comentários filtrados
 
-  // useEffect para filtrar os comentários sempre que a prop "comments" mudar
   useEffect(() => {
-    if (comments && title) {
-      const filtered = comments.filter((comment) => comment.subject === title);
+    if (comments && taskId) {
+      const filtered = comments.filter((comment) => comment.taskId === taskId);
       setFilteredComments(filtered);
+    } else {
+      setFilteredComments([]);
     }
-  }, [comments, title]); // Re-executa sempre que "comments" ou "title" mudarem
+  }, [comments, taskId]); // Re-executa sempre que "comments" ou "taskId" mudarem
 
   if (!isOpen) return null;
 
@@ -32,6 +34,8 @@ const CommentsModal = ({
 
     await onSendComment({
       content: newComment,
+      taskId: taskId,
+      isOrientando: isOrientando,
       subject: title,
     });
 
@@ -54,7 +58,7 @@ const CommentsModal = ({
         </div>
 
         <div className="p-4 overflow-y-auto max-h-96">
-          {filteredComments.length > 0 ? ( // Use a lista filtrada aqui
+          {filteredComments.length > 0 ? (
             filteredComments.map((comment, index) => (
               <div key={index} className="mb-4 p-3 bg-gray-100 rounded-lg">
                 <p className="text-sm font-medium text-gray-800">

@@ -71,9 +71,7 @@ export const Timeline = ({
   };
 
   const handleComments = (task) => {
-    const filtered = comments.filter(
-      (comment) => comment.subject === task.title
-    );
+    const filtered = comments.filter((comment) => comment.taskId === task.id);
     setModalComments(filtered);
     setTitle(task.title);
     setCurrentTask(task);
@@ -83,7 +81,7 @@ export const Timeline = ({
   const updateModalComments = () => {
     if (currentTask) {
       const filtered = comments.filter(
-        (comment) => comment.subject === currentTask.title
+        (comment) => comment.taskId === currentTask.id
       );
       setModalComments(filtered);
     }
@@ -153,7 +151,7 @@ export const Timeline = ({
   const defNumComments = () => {
     const result = tasks.map((task) => {
       const qtd = comments.filter(
-        (comment) => comment.subject === task.title
+        (comment) => comment.taskId === task.id
       ).length;
       return {
         title: task.title,
@@ -337,6 +335,7 @@ export const Timeline = ({
         isOrientando={isOrientando}
         onSendComment={handleSendComment}
         onCommentSent={updateModalComments}
+        taskId={currentTask?.id}
       />
       {isTaskModalOpen && taskToSendFile && (
         <TaskModal
