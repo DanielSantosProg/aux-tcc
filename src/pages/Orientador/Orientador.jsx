@@ -16,8 +16,7 @@ const Orientador = ({ user, data }) => {
   const location = useLocation();
   const orientador = location.state?.orientador;
   const isUserOrientador = user?.userType === "orientador";
-  const available =
-    orientador?.qtd_orientandos < orientador?.max_orientandos ?? false;
+  const available = orientador?.qtd_orientandos < orientador?.max_orientandos;
 
   const [currUserOrientando, setCurrUserOrientando] = useState(false);
   const [showModal, setShowModal] = useState(false);

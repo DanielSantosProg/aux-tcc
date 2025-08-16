@@ -22,7 +22,7 @@ const TimelineDropdown = ({
     <div className="relative">
       <button
         onClick={() => setDropdownOpen((open) => !open)}
-        className="text-emerald-500 bg-gray-50 hover:bg-gray-300 focus:ring-2 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+        className="text-emerald-500 bg-gray-50 hover:bg-gray-300 focus:ring-2 focus:outline-none font-bold rounded-lg text-sm px-5 py-1 text-center inline-flex items-center"
         type="button"
       >
         {buttonLabel}

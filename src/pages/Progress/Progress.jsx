@@ -166,13 +166,18 @@ const Progress = ({ user }) => {
       </div>
 
       <p className="text-gray-600 py-4 px-16">
-        Acompanhe o seu progresso, interaja com seu orientador e faça a entrega
-        das tarefas.
+        {user?.userType === "orientando"
+          ? `Acompanhe o seu progresso, interaja com seu orientador e faça a entrega
+        das tarefas.`
+          : `Acompanhe o progresso dos seus orientandos, interaja com eles e faça o gerenciamento das tarefas.`}
       </p>
       <ProgressStepper />
       <div className="self-start px-8 w-full">
         {user?.userType === "orientador" && (
-          <div className="flex self-center justify-center">
+          <div className="flex flex-col self-center items-center">
+            <p className="mb-1 text-[12px] font-medium text-gray-700">
+              Orientando:
+            </p>
             <TimelineDropdown
               orientandos={orientandos}
               selectedOrientando={selectedOrientando}

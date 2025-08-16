@@ -217,7 +217,7 @@ export const Timeline = ({
           const { day, monthYear } = formatDate(task.dataEntrega);
           return (
             <div key={index} className="w-full">
-              <li className="mb-10 ms-4">
+              <li className="mb-8 ms-4">
                 <div className="absolute w-6 h-10 bg-white text-2xl text-gray-600 -start-3.5 border border-white">
                   {day}
                 </div>
@@ -242,7 +242,10 @@ export const Timeline = ({
                           task.status.slice(1)}
                       </span>
                     </div>
-                    <p className="mb-4 text-base font-normal text-gray-500">
+                    <p className="mb-3 text-[14px] font-normal text-gray-500">
+                      <span className="">Data de Entrega:</span> 01/01/2026
+                    </p>
+                    <p className="mb-3 text-base font-normal text-gray-700">
                       {task.description}
                     </p>
                   </div>

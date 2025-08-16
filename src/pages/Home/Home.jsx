@@ -6,8 +6,16 @@ import { GraduationCap } from "lucide-react";
 const Home = () => {
   const [accordionData] = useState([
     {
+      title: "Como posso me cadastrar no AuxTCC?",
+      text: "Para se cadastrar, solicite ao professor da matéria de TCC que seja realizado seu cadastro.",
+    },
+    {
+      title: "Como posso ver as áreas de atuação dos orientadores?",
+      text: "Você pode acessar a aba Orientadores para ver as áreas de atuação de cada professor. Clique no orientador desejado e você encontrará informações sobre suas linhas de pesquisa e como entrar em contato.",
+    },
+    {
       title: "Como iniciar o TCC?",
-      text: "Para iniciar seu TCC, você deve escolher um orientador, definir um tema, entrar em contato com um orientador, preencher e enviar a Carta de Aceite (disponível na aba de Documentos) para o orientador escolhido.",
+      text: "Para iniciar seu TCC, você deve escolher um orientador, definir um tema e enviar sua solicitação na página do orientador.",
     },
     {
       title: "Quais os prazos importantes?",
