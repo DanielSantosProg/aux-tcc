@@ -5,7 +5,6 @@ import {
   Label,
   TextInput,
   Checkbox,
-  Spinner,
   Alert,
 } from "flowbite-react";
 
@@ -53,7 +52,7 @@ const LoginModal = ({ login }) => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Entrar</Button>
-      <Modal show={open} onClose={() => setOpen(false)} size="md" popup={true}>
+      <Modal show={open} onClose={() => setOpen(false)} size="md" popup>
         <Modal.Header />
         <Modal.Body>
           <h3 className="mb-4 text-xl font-semibold text-gray-900">
@@ -90,7 +89,13 @@ const LoginModal = ({ login }) => {
               <Label htmlFor="remember">Lembre-se de mim</Label>
             </div>
             <Button type="submit" disabled={loading} className="w-full">
-              {loading ? <Spinner /> : "Entre em sua conta"}
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : (
+                "Entre em sua conta"
+              )}
             </Button>
           </form>
         </Modal.Body>
