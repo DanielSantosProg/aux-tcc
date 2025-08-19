@@ -24,7 +24,7 @@ import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const { data, isPending, error } = useFetch(
-    "http://localhost:3001/api/users"
+    `${process.env.VITE_API_BASE}/api/users`
   );
   const { user, login, logout } = useContext(AuthContext);
 

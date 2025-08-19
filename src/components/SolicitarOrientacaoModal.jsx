@@ -26,13 +26,16 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
     };
 
     try {
-      const data = await apiFetch("http://localhost:3001/api/solicitacoes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(solicitacao),
-      });
+      const data = await apiFetch(
+        `${process.env.VITE_API_BASE}/api/solicitacoes`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(solicitacao),
+        }
+      );
 
       console.log("Solicitação enviada com sucesso:", data);
       alert("Solicitação enviada com sucesso!");

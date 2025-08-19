@@ -56,7 +56,7 @@ const Orientador = ({ user, data }) => {
         try {
           // Endpoint para verificar se o usuário é orientando deste orientador
           const orientacaoResponse = await fetch(
-            `http://localhost:3001/api/orientacoes?orientador_id=${foundOrientador.id}&orientando_id=${user.id}`
+            `${process.env.VITE_API_BASE}/api/orientacoes?orientador_id=${foundOrientador.id}&orientando_id=${user.id}`
           );
           const orientacaoData = await orientacaoResponse.json();
 
@@ -70,7 +70,7 @@ const Orientador = ({ user, data }) => {
         // Lógica para verificar se já existe uma solicitação pendente
         try {
           const solicitacaoResponse = await fetch(
-            `http://localhost:3001/api/solicitacoes?orientando_id=${user.id}&orientador_id=${foundOrientador.id}`
+            `${process.env.VITE_API_BASE}/api/solicitacoes?orientando_id=${user.id}&orientador_id=${foundOrientador.id}`
           );
           const solicitacaoData = await solicitacaoResponse.json();
           setHasSolicitacao(solicitacaoData.length > 0);

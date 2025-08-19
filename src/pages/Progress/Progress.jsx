@@ -22,7 +22,7 @@ const Progress = ({ user }) => {
       if (user?.userType === "orientador") {
         try {
           const response = await fetch(
-            `http://localhost:3001/api/orientacoes?orientador_id=${user.id}`
+            `${process.env.VITE_API_BASE}/api/orientacoes?orientador_id=${user.id}`
           );
           if (!response.ok) throw new Error("Erro ao buscar orientandos");
           const dados = await response.json();
@@ -56,14 +56,14 @@ const Progress = ({ user }) => {
       try {
         // Buscar tarefas
         const tasksResponse = await fetch(
-          `http://localhost:3001/api/tasks?orientando_id=${orientandoId}`
+          `${process.env.VITE_API_BASE}/api/tasks?orientando_id=${orientandoId}`
         );
         if (!tasksResponse.ok) throw new Error("Erro ao buscar tarefas");
         const tasksData = await tasksResponse.json();
         setTasks(tasksData);
 
         const commentsResponse = await fetch(
-          `http://localhost:3001/api/comments?orientando_id=${orientandoId}`
+          `${process.env.VITE_API_BASE}/api/comments?orientando_id=${orientandoId}`
         );
         if (!commentsResponse.ok) throw new Error("Erro ao buscar comentários");
         const commentsData = await commentsResponse.json();
@@ -86,7 +86,7 @@ const Progress = ({ user }) => {
     if (!orientandoId) return;
 
     const response = await fetch(
-      `http://localhost:3001/api/tasks?orientando_id=${orientandoId}`
+      `${process.env.VITE_API_BASE}/api/tasks?orientando_id=${orientandoId}`
     );
     const data = await response.json();
     setTasks(data);
@@ -101,7 +101,7 @@ const Progress = ({ user }) => {
       ...taskData,
       orientando_id: orientandoId,
     };
-    await apiFetch("http://localhost:3001/api/tasks", {
+    await apiFetch("${process.env.VITE_API_BASE}/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
@@ -110,7 +110,7 @@ const Progress = ({ user }) => {
   };
 
   const onTaskUpdate = async (oldTask, updatedTaskData) => {
-    await fetch(`http://localhost:3001/api/tasks/${oldTask.id}`, {
+    await fetch(`${process.env.VITE_API_BASE}/api/tasks/${oldTask.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -123,7 +123,7 @@ const Progress = ({ user }) => {
   };
 
   const onTaskDelete = async (taskToDelete) => {
-    await fetch(`http://localhost:3001/api/tasks/${taskToDelete.id}`, {
+    await fetch(`${process.env.VITE_API_BASE}/api/tasks/${taskToDelete.id}`, {
       method: "DELETE",
     });
     fetchTasks();
@@ -132,16 +132,19 @@ const Progress = ({ user }) => {
   // --- Função para criar comentários ---
   const onCommentCreate = async (newComment) => {
     try {
-      const response = await fetch("http://localhost:3001/api/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...newComment,
-          isOrientando: isOrientando,
-        }),
-      });
+      const response = await fetch(
+        "${process.env.VITE_API_BASE}/api/comments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...newComment,
+            isOrientando: isOrientando,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Falha ao criar o comentário");

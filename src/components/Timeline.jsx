@@ -100,16 +100,10 @@ export const Timeline = ({
       if (link) {
         dataToSend.link = link;
       } else if (file) {
-        // Se for um arquivo, você precisará usar FormData
-        // O exemplo abaixo é para o link, mas a lógica para arquivo é similar.
-        // É recomendado usar uma biblioteca como `axios` para facilitar.
+        console.log("Fazer algo...");
       }
-
-      // A sua rota de backend está esperando `link` no body
-      // Se você quiser enviar o arquivo, precisará de uma rota diferente
-      // que lide com `multipart/form-data`.
       const response = await fetch(
-        `http://localhost:3001/api/tasks/${taskId}/file_attach`,
+        `${process.env.VITE_API_BASE}/api/tasks/${taskId}/file_attach`,
         {
           method: "PUT",
           headers: {
