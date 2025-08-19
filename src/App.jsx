@@ -30,6 +30,26 @@ function App() {
 
   useEffect(() => {}, [data]);
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-red-600 font-bold text-center p-4">
+        <p>
+          Erro ao conectar com o servidor. Por favor, tente novamente mais
+          tarde.
+        </p>
+        <p>Detalhes: {error.message}</p>
+      </div>
+    );
+  }
+
+  if (isPending) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-500 font-bold">
+        <p>Carregando...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex-row">
       <BrowserRouter>
