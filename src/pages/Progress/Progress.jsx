@@ -22,7 +22,9 @@ const Progress = ({ user }) => {
       if (user?.userType === "orientador") {
         try {
           const response = await fetch(
-            `${process.env.VITE_API_BASE}/api/orientacoes?orientador_id=${user.id}`
+            `${import.meta.env.VITE_API_BASE}/api/orientacoes?orientador_id=${
+              user.id
+            }`
           );
           if (!response.ok) throw new Error("Erro ao buscar orientandos");
           const dados = await response.json();
@@ -56,14 +58,18 @@ const Progress = ({ user }) => {
       try {
         // Buscar tarefas
         const tasksResponse = await fetch(
-          `${process.env.VITE_API_BASE}/api/tasks?orientando_id=${orientandoId}`
+          `${
+            import.meta.env.VITE_API_BASE
+          }/api/tasks?orientando_id=${orientandoId}`
         );
         if (!tasksResponse.ok) throw new Error("Erro ao buscar tarefas");
         const tasksData = await tasksResponse.json();
         setTasks(tasksData);
 
         const commentsResponse = await fetch(
-          `${process.env.VITE_API_BASE}/api/comments?orientando_id=${orientandoId}`
+          `${
+            import.meta.env.VITE_API_BASE
+          }/api/comments?orientando_id=${orientandoId}`
         );
         if (!commentsResponse.ok) throw new Error("Erro ao buscar comentários");
         const commentsData = await commentsResponse.json();
@@ -86,7 +92,7 @@ const Progress = ({ user }) => {
     if (!orientandoId) return;
 
     const response = await fetch(
-      `${process.env.VITE_API_BASE}/api/tasks?orientando_id=${orientandoId}`
+      `${import.meta.env.VITE_API_BASE}/api/tasks?orientando_id=${orientandoId}`
     );
     const data = await response.json();
     setTasks(data);
@@ -101,7 +107,7 @@ const Progress = ({ user }) => {
       ...taskData,
       orientando_id: orientandoId,
     };
-    await apiFetch("${process.env.VITE_API_BASE}/api/tasks", {
+    await apiFetch(`${import.meta.env.VITE_API_BASE}/api/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
@@ -110,7 +116,7 @@ const Progress = ({ user }) => {
   };
 
   const onTaskUpdate = async (oldTask, updatedTaskData) => {
-    await fetch(`${process.env.VITE_API_BASE}/api/tasks/${oldTask.id}`, {
+    await fetch(`${import.meta.env.VITE_API_BASE}/api/tasks/${oldTask.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -123,9 +129,12 @@ const Progress = ({ user }) => {
   };
 
   const onTaskDelete = async (taskToDelete) => {
-    await fetch(`${process.env.VITE_API_BASE}/api/tasks/${taskToDelete.id}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `${import.meta.env.VITE_API_BASE}/api/tasks/${taskToDelete.id}`,
+      {
+        method: "DELETE",
+      }
+    );
     fetchTasks();
   };
 
@@ -133,7 +142,7 @@ const Progress = ({ user }) => {
   const onCommentCreate = async (newComment) => {
     try {
       const response = await fetch(
-        "${process.env.VITE_API_BASE}/api/comments",
+        `${import.meta.env.VITE_API_BASE}/api/comments`,
         {
           method: "POST",
           headers: {

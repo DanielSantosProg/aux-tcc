@@ -103,7 +103,7 @@ export const Timeline = ({
         console.log("Fazer algo...");
       }
       const response = await fetch(
-        `${process.env.VITE_API_BASE}/api/tasks/${taskId}/file_attach`,
+        `${import.meta.env.VITE_API_BASE}/api/tasks/${taskId}/file_attach`,
         {
           method: "PUT",
           headers: {

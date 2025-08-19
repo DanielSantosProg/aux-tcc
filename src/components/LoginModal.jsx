@@ -14,7 +14,7 @@ const LoginModal = ({ data, login }) => {
 
     try {
       const response = await fetch(
-        `${process.env.VITE_API_BASE}/api/auth/login`,
+        `${import.meta.env.VITE_API_BASE}/api/auth/login`,
         {
           method: "POST",
           headers: {

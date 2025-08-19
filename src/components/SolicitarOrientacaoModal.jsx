@@ -27,7 +27,7 @@ const SolicitarOrientacaoModal = ({ user, orientador, onClose }) => {
 
     try {
       const data = await apiFetch(
-        `${process.env.VITE_API_BASE}/api/solicitacoes`,
+        `${import.meta.env.VITE_API_BASE}/api/solicitacoes`,
         {
           method: "POST",
           headers: {

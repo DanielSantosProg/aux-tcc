@@ -55,7 +55,7 @@ const Solicitacoes = () => {
     try {
       const response = await fetch(
         `${
-          process.env.VITE_API_BASE
+          import.meta.env.VITE_API_BASE
         }/api/solicitacoes?orientador_email=${encodeURIComponent(user.email)}`
       );
       if (!response.ok) throw new Error("Erro ao buscar solicitações");
@@ -81,7 +81,9 @@ const Solicitacoes = () => {
   ) => {
     try {
       const response = await fetch(
-        `${process.env.VITE_API_BASE}/api/solicitacoes/${solicitacaoId}/status`,
+        `${
+          import.meta.env.VITE_API_BASE
+        }/api/solicitacoes/${solicitacaoId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -101,7 +103,7 @@ const Solicitacoes = () => {
       // Se for aprovado, também cria a orientação
       if (status === "aprovada") {
         const orientacaoResponse = await fetch(
-          `${process.env.VITE_API_BASE}/api/orientacoes`,
+          `${import.meta.env.VITE_API_BASE}/api/orientacoes`,
           {
             method: "POST",
             headers: {
