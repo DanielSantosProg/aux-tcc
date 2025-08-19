@@ -62,7 +62,7 @@ const LoginModal = ({ open, setOpen, login }) => {
       <ModalHeader />
       <ModalBody>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+          <h3 className="text-xl font-medium text-gray-900">
             Login de Usuário
           </h3>
 

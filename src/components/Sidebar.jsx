@@ -14,7 +14,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-const Sidebar = ({ user, logout }) => {
+const Sidebar = ({ user, logout, onLoginClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const [erro, setErro] = useState(null);
