@@ -28,37 +28,33 @@ function App() {
   );
   const { user, login, logout } = useContext(AuthContext);
 
-  useEffect(() => {}, [data]);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-red-600 font-bold text-center p-4">
-        <p>
-          Erro ao conectar com o servidor. Por favor, tente novamente mais
-          tarde.
-        </p>
-        <p>Detalhes: {error.message}</p>
-      </div>
-    );
+    return <div>Erro: {error.message}</div>;
   }
-
   if (isPending) {
-    return (
-      <div className="flex items-center justify-center min-h-screen text-gray-500 font-bold">
-        <p>Carregando...</p>
-      </div>
-    );
+    return <div>Carregando...</div>;
   }
 
   return (
     <div className="min-h-screen flex-row">
       <BrowserRouter>
         <div className="flex min-h-screen">
-          <Sidebar user={user} login={login} logout={logout} />
+          <Sidebar
+            user={user}
+            login={login}
+            logout={logout}
+            onLoginClick={() => setLoginModalOpen(true)}
+          />
           <UserConfigModal />
           <ThemeConfig dark={false} />
           <div className="ml-2 sm:ml-64">
-            <LoginModal data={data} login={login} />
+            <LoginModal
+              open={loginModalOpen}
+              setOpen={setLoginModalOpen}
+              login={login}
+            />
             <RegisterModal />
             <Routes>
               <Route path="/" element={<Home data={data} />} />
