@@ -2,7 +2,7 @@ import "./App.css";
 import "flowbite";
 import { ThemeConfig } from "flowbite-react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 //Pages
 import Home from "./pages/Home/Home";
