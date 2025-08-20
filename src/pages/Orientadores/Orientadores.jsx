@@ -6,7 +6,7 @@ const Orientadores = () => {
   const [orientadores, setOrientadores] = useState([
     {
       nome: "Ana Carolina",
-      qtd_orientandos: 5,
+      qtd_orientandos: 0,
       max_orientandos: 10,
       tot_orientacoes: 18,
       email: "carolsoko@ifba.edu.br",

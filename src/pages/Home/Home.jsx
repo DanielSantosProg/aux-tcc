@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Accordion from "../../components/Accordion";
 import Card from "../../components/Card";
 import { GraduationCap } from "lucide-react";
+import CustomAccordion from "../../components/Accordion";
 
 const Home = () => {
   const [accordionData] = useState([
@@ -65,7 +65,7 @@ const Home = () => {
         <h2 className="text-2xl my-2 font-bold text-black">
           Perguntas Frequentes:
         </h2>
-        <Accordion items={accordionData} />
+        <CustomAccordion items={accordionData} />
       </div>
     </div>
   );
