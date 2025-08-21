@@ -1,60 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OrientadorCard from "../../components/OrientadorCard";
 import { Users } from "lucide-react";
 
-const Orientadores = () => {
-  const [orientadores, setOrientadores] = useState([
-    {
-      nome: "Ana Carolina",
-      qtd_orientandos: 0,
-      max_orientandos: 10,
-      tot_orientacoes: 18,
-      email: "carolsoko@ifba.edu.br",
-      formacao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      area_atuacao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. ",
-    },
-    {
-      nome: "Neide",
-      qtd_orientandos: 2,
-      max_orientandos: 3,
-      tot_orientacoes: 12,
-      email: "neide@ifba.edu.br",
-      formacao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      area_atuacao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. ",
-    },
-    {
-      nome: "Júlio",
-      qtd_orientandos: 4,
-      max_orientandos: 6,
-      tot_orientacoes: 7,
-      email: "julio@ifba.edu.br",
-      formacao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      area_atuacao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. ",
-    },
-    {
-      nome: "Bulhões",
-      qtd_orientandos: 3,
-      max_orientandos: 3,
-      tot_orientacoes: 22,
-      email: "bulhoes@ifba.edu.br",
-      formacao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      area_atuacao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. ",
-    },
-    {
-      nome: "Rebeca",
-      qtd_orientandos: 2,
-      max_orientandos: 5,
-      tot_orientacoes: 16,
-      email: "rebeca@ifba.edu.br",
-      formacao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      area_atuacao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec efficitur est. Phasellus vel nisl sodales ligula hendrerit sagittis. Pellentesque at ipsum eleifend, porttitor quam. ",
-    },
-  ]);
+const Orientadores = ({ data }) => {
+  const [orientadores, setOrientadores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrientadores = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE}/api/users/orientadores`
+        );
+        if (!response.ok) {
+          throw new Error("Erro ao buscar dados dos orientadores");
+        }
+        const data = await response.json();
+        setOrientadores(data);
+        console.log("Data: ", data);
+        console.log("Orientadores: ", orientadores);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrientadores();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col w-full max-w-7xl px-4">
+        <p className="py-4 px-16 text-center">Carregando orientadores...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col w-full max-w-7xl px-4">
+        <p className="py-4 px-16 text-center text-red-500">Erro: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full max-w-7xl px-4">
@@ -83,9 +73,28 @@ const Orientadores = () => {
         </div>
 
         <div className="">
-          {orientadores.map((orientador, index) => (
-            <OrientadorCard key={index} orientador={orientador} />
-          ))}
+          {orientadores.length > 0 ? (
+            orientadores.map((orientador) => (
+              <div
+                key={orientador.id}
+                onClick={() =>
+                  navigate(
+                    `/orientador/${encodeURIComponent(orientador.name)}`,
+                    {
+                      state: { orientador },
+                    }
+                  )
+                }
+                className="cursor-pointer"
+              >
+                <OrientadorCard orientador={orientador} />
+              </div>
+            ))
+          ) : (
+            <p className="py-4 px-16 text-center text-gray-500">
+              Nenhum orientador encontrado.
+            </p>
+          )}
         </div>
       </div>
     </div>

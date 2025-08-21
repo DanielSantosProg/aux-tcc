@@ -1,3 +1,4 @@
+// src/pages/Orientador.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import {
@@ -14,7 +15,11 @@ import SolicitarOrientacaoModal from "../../components/SolicitarOrientacaoModal"
 const Orientador = ({ user, data }) => {
   const { nome } = useParams();
   const location = useLocation();
-  const orientador = location.state?.orientador;
+
+  const [orientador, setOrientador] = useState(
+    location.state?.orientador || null
+  );
+
   const isUserOrientador = user?.userType === "orientador";
   const available = orientador?.qtd_orientandos < orientador?.max_orientandos;
 
@@ -23,53 +28,62 @@ const Orientador = ({ user, data }) => {
   const [hasSolicitacao, setHasSolicitacao] = useState(false);
   const [orientadorId, setOrientadorId] = useState(null);
 
+  useEffect(() => {
+    const fetchOrientador = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE}/api/users/orientadores`
+        );
+        const all = await response.json();
+        const found = all.find((u) => u.name === decodeURIComponent(nome));
+        setOrientador(found || null);
+      } catch (err) {
+        console.error("Erro ao buscar orientador:", err);
+      }
+    };
+
+    if (nome) fetchOrientador();
+  }, [nome]);
+
+  useEffect(() => {
+    if (!orientador && data && nome) {
+      const decodedNome = decodeURIComponent(nome);
+      const found = data.find((u) => u.name === decodedNome);
+      setOrientador(found || null);
+    }
+  }, [data, nome, orientador]);
+
   const handleSolicitarOrientacao = () => {
     setShowModal(true);
-    const modal = document.getElementById("solicitar-orientacao-modal");
-    if (modal) {
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    const modal = document.getElementById("solicitar-orientacao-modal");
-    if (modal) {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
   };
 
   useEffect(() => {
     const checkData = async () => {
-      console.log("Executando checkData...");
-      if (!data || !orientador || !user) {
-        return;
-      }
+      if (!data || !orientador || !user) return;
 
       const foundOrientador = data.find((u) => u.email === orientador.email);
+      console.log("Orientador encontrado:", foundOrientador);
 
       if (foundOrientador) {
         setOrientadorId(foundOrientador.id);
 
         try {
-          // Endpoint para verificar se o usuário é orientando deste orientador
           const orientacaoResponse = await fetch(
             `${import.meta.env.VITE_API_BASE}/api/orientacoes?orientador_id=${
               foundOrientador.id
             }&orientando_id=${user.id}`
           );
           const orientacaoData = await orientacaoResponse.json();
-
-          // Se o array de orientações não estiver vazio, o usuário já é orientando
           setCurrUserOrientando(orientacaoData.length > 0);
+          console.log(orientacaoData);
         } catch (error) {
           console.error("Erro ao verificar orientações:", error);
-          setCurrUserOrientando(false);
         }
 
-        // Lógica para verificar se já existe uma solicitação pendente
         try {
           const solicitacaoResponse = await fetch(
             `${import.meta.env.VITE_API_BASE}/api/solicitacoes?orientando_id=${
@@ -77,22 +91,25 @@ const Orientador = ({ user, data }) => {
             }&orientador_id=${foundOrientador.id}`
           );
           const solicitacaoData = await solicitacaoResponse.json();
+          console.log(solicitacaoData);
           setHasSolicitacao(solicitacaoData.length > 0);
         } catch (error) {
           console.error("Erro ao verificar solicitações:", error);
-          setHasSolicitacao(false);
         }
-      } else {
-        setOrientadorId(null);
-        setCurrUserOrientando(false);
-        setHasSolicitacao(false);
       }
     };
 
     checkData();
   }, [data, orientador, user]);
 
-  useEffect(() => {}, [currUserOrientando, available, hasSolicitacao, user]);
+  if (!orientador) {
+    return (
+      <div className="p-10">
+        <p className="text-gray-600">Orientador não encontrado.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col p-10 w-6xl items-start">
       <div className="space-y-2">
@@ -109,24 +126,21 @@ const Orientador = ({ user, data }) => {
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white min-w-[1000px] rounded-lg shadow-md overflow-hidden">
         <div className="bg-gray-50 p-6 border-b border-gray-200">
           <div className="flex items-start gap-6">
             <div className="relative">
               <img
                 className="w-24 h-24 rounded-full ring-4 ring-white shadow-lg object-cover"
                 src="/placeholder-avatar.png"
-                alt={orientador.nome}
+                alt={orientador.name}
                 onError={(e) => {
                   e.target.style.display = "none";
                   e.target.nextSibling.style.display = "flex";
                 }}
               />
-              <div
-                className="w-24 h-24 rounded-full ring-4 ring-white shadow-lg bg-blue-500 text-white text-xl font-semibold items-center justify-center hidden"
-                style={{ display: "none" }}
-              >
-                {orientador.nome
+              <div className="w-24 h-24 rounded-full ring-4 ring-white shadow-lg bg-blue-500 text-white text-xl font-semibold items-center justify-center hidden">
+                {orientador.name
                   .split(" ")
                   .map((n) => n[0])
                   .join("")
@@ -136,7 +150,7 @@ const Orientador = ({ user, data }) => {
 
             <div className="flex-1 space-y-2">
               <h2 className="text-2xl font-bold text-gray-900">
-                {orientador.nome}
+                {orientador.name}
               </h2>
               <div className="flex items-center gap-2 text-gray-600">
                 <Mail className="w-4 h-4" />
@@ -171,6 +185,7 @@ const Orientador = ({ user, data }) => {
         </div>
 
         <div className="p-6 space-y-6">
+          {/* Formação */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-blue-600">
               <GraduationCap className="w-5 h-5" />
@@ -183,6 +198,7 @@ const Orientador = ({ user, data }) => {
             </div>
           </div>
 
+          {/* Áreas de Atuação */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-blue-600">
               <Briefcase className="w-5 h-5" />
@@ -197,7 +213,8 @@ const Orientador = ({ user, data }) => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+          {/* Orientações e Status */}
+          <div className="flex flex-row justify-between pt-4 border-t border-gray-200">
             <div className="flex items-center">
               <BookOpenCheck
                 className={`w-5 h-5 mx-2 ${
@@ -256,14 +273,13 @@ const Orientador = ({ user, data }) => {
         </div>
       </div>
 
-      {/* Modal */}
-      {showModal && orientadorId && (
-        <SolicitarOrientacaoModal
-          user={user}
-          orientador={{ ...orientador, id: orientadorId }}
-          onClose={handleCloseModal}
-        />
-      )}
+      {/* Modal Controlado */}
+      <SolicitarOrientacaoModal
+        user={user}
+        orientador={{ ...orientador, id: orientadorId }}
+        onClose={handleCloseModal}
+        show={showModal}
+      />
     </div>
   );
 };
