@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Modal, ModalBody, ModalHeader, Button, Label } from "flowbite-react";
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Button,
+  Label,
+  FileInput,
+} from "flowbite-react";
 import { Link, CheckCircle2 } from "lucide-react";
 
 const TaskModal = ({
@@ -44,15 +51,19 @@ const TaskModal = ({
     <Modal show={isOpen} onClose={onClose} size="md" popup>
       <ModalHeader className="p-4">{task.title}</ModalHeader>
       <ModalBody>
-        <div className="space-y-10">
+        <div className="space-y-6">
           <div>
-            <Label htmlFor="file_input" value="Anexe o Arquivo" />
-            <input
-              id="file_input"
-              type="file"
-              onChange={handleFileChange}
+            <Label
+              htmlFor="file-upload"
+              className="text-gray-700"
+              value="Anexe o Arquivo"
+            >
+              Anexe o Arquivo
+            </Label>
+            <FileInput
+              id="file-upload"
+              className="my-2"
               disabled={linkAttached}
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
             />
           </div>
 
@@ -64,8 +75,14 @@ const TaskModal = ({
           </div>
 
           <div>
-            <Label htmlFor="link_input" value="Insira o link" />
-            <div className="relative flex flex-row">
+            <Label
+              htmlFor="attach-link"
+              className="text-gray-700"
+              value="Insira o Link"
+            >
+              Insira o Link
+            </Label>
+            <div id="attack-link" className="relative flex flex-row my-2">
               <button
                 onClick={handleAttachLink}
                 className="w-16 h-10 inset-y-0 bg-gray-800 focus:outline-none flex items-center justify-center pl-3 pr-3 rounded-l-sm hover:bg-gray-700"
@@ -86,7 +103,7 @@ const TaskModal = ({
                   value={link}
                   onChange={handleLinkChange}
                   disabled={fileAttached}
-                  className="rounded-r-sm w-2xl text-sm disabled:bg-gray-300"
+                  className="rounded-r-sm border-1 border-gray-400 w-2xl text-sm disabled:bg-gray-300"
                 />
               )}
             </div>

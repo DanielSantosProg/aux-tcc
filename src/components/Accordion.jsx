@@ -11,7 +11,9 @@ const CustomAccordion = ({ items }) => {
     <Accordion collapseAll>
       {items.map((item, index) => (
         <AccordionPanel key={index}>
-          <AccordionTitle>{item.title}</AccordionTitle>
+          <AccordionTitle className="bg-gray-100 border-b-1 border-gray-600">
+            {item.title}
+          </AccordionTitle>
           <AccordionContent>
             <p className="text-gray-500 dark:text-gray-500">{item.text}</p>
           </AccordionContent>

@@ -14,10 +14,11 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-const Sidebar = ({ user, logout, onLoginClick }) => {
+const Sidebar = ({ user, logout, onLoginClick, onConfigClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const [erro, setErro] = useState(null);
+  const [numberOfTasks, setNumberOfTasks] = useState(0);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -31,7 +32,36 @@ const Sidebar = ({ user, logout, onLoginClick }) => {
     }
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    const fetchTasksCount = async () => {
+      try {
+        let id = user?.id || 0;
+        let url = `${import.meta.env.VITE_API_BASE}/api/tasks`;
+        const response = await fetch(`${url}?orientando_id=${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          setErro(result.message || "Erro ao buscar contagem de tarefas.");
+          return;
+        }
+
+        const pendentesCount = result.reduce((count, task) => {
+          return task.status === "pendente" ? count + 1 : count;
+        }, 0);
+
+        setNumberOfTasks(pendentesCount);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTasksCount();
+  }, [user]);
 
   const getNavLinkClasses = (path) => {
     const isActive = location.pathname === path;
@@ -64,26 +94,26 @@ const Sidebar = ({ user, logout, onLoginClick }) => {
 
       {/* CSS local para controlar o comportamento do gradiente no texto e no SVG */}
       <style>{`
-        /* default: ícone usa stroke=currentColor (herda color), texto usa cor sólida (tailwind) */
-        .aux-nav-link svg { stroke: currentColor; }
+          /* default: ícone usa stroke=currentColor (herda color), texto usa cor sólida (tailwind) */
+          .aux-nav-link svg { stroke: currentColor; }
 
-        /* Hover ou active: aplicar gradiente no SVG e no texto */
-        .aux-nav-link:hover svg,
-        .aux-nav-link.aux-active svg {
-          /* usa o gradiente definido em <defs> */
-          stroke: url(#sidebar-grad);
-        }
+          /* Hover ou active: aplicar gradiente no SVG e no texto */
+          .aux-nav-link:hover svg,
+          .aux-nav-link.aux-active svg {
+            /* usa o gradiente definido em <defs> */
+            stroke: url(#sidebar-grad);
+          }
 
-        .aux-nav-link:hover .aux-text,
-        .aux-nav-link.aux-active .aux-text {
-          /* aplica o mesmo gradiente visual do AuxTCC ao texto (bg-clip) */
-          background-image: linear-gradient(90deg, #22d3ee, #818cf8);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          font-weight: 700;
-        }
-      `}</style>
+          .aux-nav-link:hover .aux-text,
+          .aux-nav-link.aux-active .aux-text {
+            /* aplica o mesmo gradiente visual do AuxTCC ao texto (bg-clip) */
+            background-image: linear-gradient(90deg, #22d3ee, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+          }
+        `}</style>
 
       {/* Botão para mobile */}
       <button
@@ -105,10 +135,10 @@ const Sidebar = ({ user, logout, onLoginClick }) => {
       {/* Sidebar */}
       <aside
         className={`
-          flex flex-col justify-between fixed z-40 w-64 min-h-screen max-h-screen transition-transform duration-300 ease-in-out bg-gray-50 border-r border-gray-200
-          ${isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"}
-          flex-shrink-0
-        `}
+            flex flex-col justify-between fixed z-40 w-64 min-h-screen max-h-screen transition-transform duration-300 ease-in-out bg-gray-50 border-r border-gray-200
+            ${isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"}
+            flex-shrink-0
+          `}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto ">
@@ -146,7 +176,7 @@ const Sidebar = ({ user, logout, onLoginClick }) => {
                   </span>
                   {user ? (
                     <span className="inline-flex items-center justify-center w-5 h-5 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
-                      3
+                      {numberOfTasks > 0 ? numberOfTasks : "0"}
                     </span>
                   ) : (
                     <Lock className="text-gray-400" size={16} />
@@ -222,18 +252,17 @@ const Sidebar = ({ user, logout, onLoginClick }) => {
               </a>
 
               <div className="flex flex-row justify-center py-2">
-                <a href="#">
-                  <button
-                    type="button"
-                    className="focus:outline-none inline-flex text-gray-700 hover:bg-gray-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
-                  >
-                    <UserRoundCog
-                      className="text-gray-700 mr-2 mt-0.5"
-                      size={16}
-                    />
-                    Configurações
-                  </button>
-                </a>
+                <button
+                  type="button"
+                  className="focus:outline-none inline-flex text-gray-700 hover:bg-gray-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                  onClick={onConfigClick}
+                >
+                  <UserRoundCog
+                    className="text-gray-700 mr-2 mt-0.5"
+                    size={16}
+                  />
+                  Configurações
+                </button>
 
                 <Link
                   to="/"

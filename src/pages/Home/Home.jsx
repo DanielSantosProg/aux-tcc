@@ -62,7 +62,7 @@ const Home = () => {
         />
       </div>
       <div className="w-2/3 my-16 mx-16 self-start">
-        <h2 className="text-2xl my-2 font-bold text-black">
+        <h2 className="text-2xl mt-2 mb-6 mx-8 font-bold text-gray-700">
           Perguntas Frequentes:
         </h2>
         <CustomAccordion items={accordionData} />
