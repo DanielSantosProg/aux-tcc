@@ -67,7 +67,6 @@ export const Timeline = ({
 
   const handleSendComment = async (newComment) => {
     await onCommentCreate(newComment);
-    updateModalComments();
   };
 
   const handleComments = (task) => {
@@ -94,9 +93,9 @@ export const Timeline = ({
 
   const sendAttachmentToBackend = async (taskId, file, link) => {
     try {
-      // Crie um objeto com os dados a serem enviados
+      // Cria um objeto com os dados a serem enviados
       const dataToSend = {};
-      // Adicione o link ou arquivo dependendo de qual foi enviado
+      // Adiciona o link ou arquivo dependendo de qual foi enviado
       if (link) {
         dataToSend.link = link;
       } else if (file) {
@@ -120,7 +119,6 @@ export const Timeline = ({
       console.log("Anexo enviado com sucesso!");
     } catch (error) {
       console.error("Falha no envio:", error);
-      // Lide com o erro de forma apropriada, talvez exibindo uma mensagem para o usuário
     }
   };
 
@@ -130,7 +128,7 @@ export const Timeline = ({
     if (!taskToUpdate) return;
 
     // Chama a função para enviar o anexo para o backend
-    sendAttachmentToBackend(taskId, file, link); // <-- Nova chamada
+    sendAttachmentToBackend(taskId, file, link);
 
     // Cria o novo objeto com o status atualizado
     const updatedTaskData = {
@@ -141,6 +139,15 @@ export const Timeline = ({
     onTaskUpdate(taskToUpdate, updatedTaskData);
     setIsTaskModalOpen(false); // Fecha o modal
   };
+
+  useEffect(() => {
+    if (currentTask) {
+      const filtered = comments.filter(
+        (comment) => comment.taskId === currentTask.id
+      );
+      setModalComments(filtered);
+    }
+  }, [comments, currentTask]);
 
   const defNumComments = () => {
     const result = tasks.map((task) => {
