@@ -164,7 +164,7 @@ const Sidebar = ({ user, logout, onLoginClick, onConfigClick }) => {
 
               <li>
                 <a
-                  href="/progresso"
+                  href={user ? "/progresso" : "#"}
                   className={getNavLinkClasses("/progresso").link}
                 >
                   <Gauge
